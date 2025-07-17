@@ -1,0 +1,115 @@
+/* Track Layout Specific Styles */
+.main-track-layout,
+.bottom-track-layout {
+  @apply w-full my-2 px-2;
+}
+
+.track-svg {
+  @apply bg-gray-900 border border-gray-600 rounded;
+}
+
+/* Track line styles using CSS custom properties */
+.track-line {
+  stroke: #4a9eff;
+  stroke-width: 3;
+  fill: none;
+}
+
+.track-siding {
+  stroke: #4a9eff;
+  stroke-width: 2;
+  stroke-dasharray: 5,5;
+  fill: none;
+}
+
+/* Track text styles */
+.track-text {
+  fill: #00bcd4;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+/* Signal light animations */
+.signal-active {
+  filter: drop-shadow(0 0 6px currentColor);
+}
+
+.signal-inactive {
+  @apply opacity-30;
+}
+
+/* Track switch styles */
+.track-switch {
+  @apply cursor-pointer transition-all duration-200;
+}
+
+.track-switch:hover {
+  stroke-width: 3;
+  filter: drop-shadow(0 0 4px #fff);
+}
+
+/* Block section styles */
+.block-sections rect {
+  fill: none;
+  stroke: #4a9eff;
+  stroke-width: 1;
+  stroke-dasharray: 3,3;
+  @apply opacity-60;
+}
+
+/* Fouling mark styles */
+.fouling-marks line {
+  stroke: #ffff00;
+  stroke-width: 2;
+  @apply opacity-80;
+}
+
+/* Track circuit styles */
+.track-circuits line {
+  stroke: #4a9eff;
+  stroke-width: 1;
+  stroke-dasharray: 2,2;
+  @apply opacity-50;
+}
+
+/* Block indicator styles */
+.block-indicators circle {
+  @apply transition-all duration-300;
+}
+
+/* Axle counter styles */
+.axle-counters rect {
+  @apply fill-gray-800 stroke-gray-500;
+  stroke-width: 1;
+}
+
+/* Animation keyframes */
+@keyframes signal-pulse {
+  0%, 100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 6px currentColor);
+  }
+  50% {
+    opacity: 0.7;
+    filter: drop-shadow(0 0 10px currentColor);
+  }
+}
+
+@keyframes signal-blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0.3;
+  }
+}
+
+/* Apply animations using Tailwind-compatible classes */
+.animate-signal-pulse {
+  animation: signal-pulse 2s infinite;
+}
+
+.animate-signal-blink {
+  animation: signal-blink 1s infinite;
+}

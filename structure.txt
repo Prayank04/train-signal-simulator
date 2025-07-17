@@ -1,0 +1,105 @@
+# Railway Control HMI System - VS Code Project Structure
+
+## Project Folder Structure
+```
+railway-control-hmi/
+├── flask_app/
+│   ├── controllers/
+│   │   └── signal_controller.py          # RailwaySignalController moved here
+│   ├── app.py                            # Imports and runs controller
+│   └── requirements.txt
+├── public/
+│   ├── index.html
+│   └── favicon.ico
+├── src/
+│   ├── components/
+│   │   ├── Header/
+│   │   │   ├── Header.jsx
+│   │   │   └── Header.css
+│   │   ├── ControlPanels/
+│   │   │   ├── LeftControlPanel.jsx
+│   │   │   ├── RightControlPanel.jsx
+│   │   │   └── ControlPanels.css
+│   │   ├── TrackLayout/
+│   │   │   ├── MainTrackLayout.jsx
+│   │   │   ├── BottomTrackLayout.jsx
+│   │   │   ├── SignalLight.jsx
+│   │   │   ├── TrackSwitch.jsx
+│   │   │   └── TrackLayout.css
+│   │   ├── StatusBar/
+│   │   │   ├── StatusBar.jsx
+│   │   │   ├── ClockControl.jsx
+│   │   │   ├── DigitalClock.jsx
+│   │   │   └── StatusBar.css
+│   │   └── Signaling/
+│   │       ├── SignalPanel.jsx           # UI to show signals/colors
+│   │       └── Signaling.css
+│   ├── context/
+│   │   └── TimeContext.js
+│   ├── hooks/
+│   │   └── useTimer.js
+│   ├── utils/
+│   │   ├── api.js                        # includes signaling API calls
+│   │   └── Constants.js                  # parsing utilities
+│   ├── styles/
+│   │   ├── globals.css
+│   │   └── variables.css
+│   ├── App.jsx
+│   ├── App.css
+│   ├── index.js
+│   └── index.css
+├── package.json
+├── package-lock.json
+├── tailwind.config.js
+├── postcss.config.js
+├── .gitignore
+└── README.md
+```
+
+## Setup Instructions
+
+1. **Create the project:**
+   ```bash
+   npx create-react-app railway-control-hmi
+   cd railway-control-hmi
+   ```
+
+2. **Install Tailwind CSS:**
+   ```bash
+   npm install -D tailwindcss postcss autoprefixer
+   npx tailwindcss init -p
+   ```
+
+3. **Install additional dependencies:**
+   ```bash
+   npm install lucide-react
+   ```
+
+4. **Create the folder structure:**
+   ```bash
+   mkdir -p src/components/Header
+   mkdir -p src/components/ControlPanels
+   mkdir -p src/components/TrackLayout
+   mkdir -p src/components/StatusBar
+   mkdir -p src/components/UI
+   mkdir -p src/hooks
+   mkdir -p src/utils
+   mkdir -p src/styles
+   ```
+
+## File Contents Below ⬇️
+
+getSignalAspectColors(signalStates['S1'], 'U'}
+
+
+export const getAllSignals = async () => {
+  const res = await axios.get('http://localhost:5001/get_all_signals');
+  return res.data.signals;
+};
+
+export const getAllTracks = async () => {
+  const res = await axios.get('http://localhost:5001/get_all_tracks');
+  return res.data.tracks;
+};
+
+

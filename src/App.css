@@ -1,0 +1,60 @@
+.railway-hmi {
+  width: 100vw;
+  height: 100vh;
+  background-color: #333333;
+  color: white;
+  font-family: 'Courier New', monospace;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-container {
+  flex: 1;
+  background-color: #333333;
+  position: relative;
+  overflow: hidden;
+}
+
+.navigation-header {
+  text-align: center;
+  padding: 10px 0;
+}
+
+.nav-arrows {
+  color: #00bcd4;
+  font-size: 13.5px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.nav-stations {
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.track-container {
+  margin-top: 180px;
+  padding: 0 20px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #2d3748;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4a5568;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #718096;
+}

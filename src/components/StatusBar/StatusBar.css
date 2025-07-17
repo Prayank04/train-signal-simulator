@@ -1,0 +1,115 @@
+.status-bar {
+  background:  #333333;
+  border-top: 1px solid #4a5568;
+  padding: 10px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 13px;
+  height: 54px;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
+  border-bottom: 1px solid #4a5568;
+}
+
+.status-left {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.status-center {
+  flex: 1;
+  text-align: center;
+  min-width: 0;
+}
+
+.status-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 18px;
+  min-width: 0;
+}
+
+.station-info {
+  color: #00d8ef;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.system-alerts {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.alert-indicator {
+  color: #4caf50;
+  font-size: 18px;
+  animation: pulse 2s infinite;
+  filter: drop-shadow(0 0 4px #4caf50aa);
+}
+
+.alert-text {
+  color: #4caf50;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 0.01em;
+  text-shadow: 0 1px 2px #1a202c;
+}
+
+.screen-print-btn {
+  background: linear-gradient(90deg, #4b5563 80%, #374151 100%);
+  color: #fff;
+  border: 1px solid #6b7280;
+  border-radius: 5px;
+  padding: 7px 14px;
+  font-size: 12px;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+
+.screen-print-btn:hover {
+  background: #6b7280;
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.screen-print-btn:active {
+  transform: translateY(0) scale(1);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+}
+
+.time-display {
+  color: #00d8ef;
+  font-size: 14px;
+  font-weight: bold;
+  background: #1a202c;
+  padding: 5px 12px;
+  border-radius: 5px;
+  border: 1px solid #4a5568;
+  min-width: 140px;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  letter-spacing: 0.03em;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 4px #4caf50aa);
+  }
+  50% {
+    opacity: 0.6;
+  }
+}

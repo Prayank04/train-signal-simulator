@@ -1,0 +1,169 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Courier New', monospace;
+  background-color: #1a1a1a;
+  color: white;
+  overflow: hidden;
+}
+
+/* HMI Specific Styles */
+.hmi-button {
+  @apply px-3 py-1 text-xs font-mono border border-gray-500 rounded transition-all duration-200;
+}
+
+.hmi-button:hover {
+  @apply opacity-80 transform scale-105;
+}
+
+.hmi-button.active {
+  @apply shadow-lg;
+}
+
+.hmi-button.blue {
+  @apply bg-blue-600 text-white;
+}
+
+.hmi-button.blue.active {
+  @apply bg-blue-500;
+}
+
+.hmi-button.green {
+  @apply bg-green-600 text-white;
+}
+
+.hmi-button.green.active {
+  @apply bg-green-500;
+}
+
+.hmi-button.red {
+  @apply bg-red-600 text-white;
+}
+
+.hmi-button.red.active {
+  @apply bg-red-500;
+}
+
+.hmi-button.yellow {
+  @apply bg-yellow-600 text-black;
+}
+
+.hmi-button.yellow.active {
+  @apply bg-yellow-500;
+}
+
+.hmi-button.gray {
+  @apply bg-gray-600 text-white;
+}
+
+.hmi-button.gray.active {
+  @apply bg-gray-500;
+}
+
+/* Signal Light Animations */
+.signal-active {
+  filter: drop-shadow(0 0 8px currentColor);
+  animation: pulse 2s infinite;
+}
+
+.signal-inactive {
+  opacity: 0.3;
+}
+
+/* Track Elements */
+.track-line {
+  stroke: #4a9eff;
+  stroke-width: 3;
+  fill: none;
+}
+
+.track-siding {
+  stroke: #4a9eff;
+  stroke-width: 2;
+  stroke-dasharray: 5,5;
+  fill: none;
+}
+
+.track-text {
+  fill: #00bcd4;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+}
+
+.track-switch {
+  fill: #444;
+  stroke: #666;
+  stroke-width: 2;
+}
+
+.track-switch.active {
+  fill: #ff6b6b;
+  stroke: #fff;
+}
+
+/* Status Indicators */
+.status-indicator {
+  border-radius: 50%;
+  display: inline-block;
+  margin: 2px;
+}
+
+.status-green {
+  background-color: #4caf50;
+  box-shadow: 0 0 10px #4caf50;
+}
+
+.status-red {
+  background-color: #f44336;
+  box-shadow: 0 0 10px #f44336;
+}
+
+.status-yellow {
+  background-color: #ffeb3b;
+  box-shadow: 0 0 10px #ffeb3b;
+}
+
+.status-blue {
+  background-color: #2196f3;
+  box-shadow: 0 0 10px #2196f3;
+}
+
+/* Panel Styles */
+.control-panel {
+  background-color: #374151;
+  border: 1px solid #4b5563;
+  border-radius: 4px;
+  padding: 12px;
+  margin: 8px;
+}
+
+.panel-title {
+  color: #00bcd4;
+  font-size: 11px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+/* Animation Classes */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.3; }
+}
+
+.animate-blink {
+  animation: blink 1s infinite;
+}

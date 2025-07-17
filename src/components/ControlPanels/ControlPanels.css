@@ -1,0 +1,467 @@
+/* Right Control Panel */
+.right-control-panel {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: auto;
+  z-index: 15;
+  display: flex;
+  gap: 20px;
+  flex-direction: row;
+}
+
+.left-control-panel {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 600px;
+  z-index: 15;
+}
+
+.control-panel {
+  background-color: #374151;
+  border: 1px solid #4b5563;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Horizontal Panel Styles */
+.horizontal-panel {
+  margin-bottom: 0;
+  width: auto;
+  min-width: 180px;
+  height: 120px;
+}
+
+.horizontal-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.control-grid-horizontal {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.control-grid-horizontal.four-col {
+  display: flex;
+  gap: 3px;
+  flex-wrap: wrap;
+}
+
+.status-indicators-horizontal {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.emergency-button-container-horizontal {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.emergency-button.small {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin: 0;
+}
+
+.emergency-inner.small {
+  width: 10px;
+  height: 10px;
+}
+
+.line-indicator-horizontal {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.line-status-button.small {
+  width: 20px;
+  height: 14px;
+}
+
+.panel-title {
+  color: #00bcd4;
+  font-size: 9px;
+  font-weight: bold;
+  margin-bottom: 6px;
+  text-align: center;
+  font-family: 'Courier New', monospace;
+}
+
+/* System Status Panel */
+.system-status-panel {
+  background-color: #2d3748;
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.indicator-group {
+  text-align: center;
+}
+
+.indicator-label {
+  color: #00bcd4;
+  font-size: 7px;
+  font-weight: bold;
+  margin-bottom: 2px;
+  font-family: 'Courier New', monospace;
+}
+
+.indicator-sublabel {
+  color: #94a3b8;
+  font-size: 6px;
+  margin-top: 2px;
+  font-family: 'Courier New', monospace;
+}
+
+.status-light {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin: 0 auto;
+  border: 1px solid #666;
+  transition: all 0.3s ease;
+}
+
+.status-light.small {
+  width: 6px;
+  height: 6px;
+  margin: 1px;
+  display: inline-block;
+}
+
+.status-light.green {
+  background-color: #4caf50;
+  box-shadow: 0 0 6px #4caf50;
+}
+
+.status-light.red {
+  background-color: #f44336;
+  box-shadow: 0 0 6px #f44336;
+}
+
+.status-light.blue {
+  background-color: #2196f3;
+  box-shadow: 0 0 6px #2196f3;
+}
+
+.status-light.yellow {
+  background-color: #ffeb3b;
+  box-shadow: 0 0 6px #ffeb3b;
+}
+
+.status-light.gray {
+  background-color: #666;
+}
+
+.status-light.active {
+  animation: pulse 2s infinite;
+}
+
+.rgb-lights {
+  display: flex;
+  justify-content: center;
+  gap: 1px;
+}
+
+/* Emergency Controls */
+.emergency-control-panel {
+  background-color: #450a0a;
+  border-color: #7f1d1d;
+}
+
+.emergency-button {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #374151;
+  border: 2px solid #6b7280;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.emergency-button:hover {
+  border-color: #9ca3af;
+  transform: scale(1.05);
+}
+
+.emergency-button.active {
+  background-color: #dc2626;
+  border-color: #fca5a5;
+  box-shadow: 0 0 8px #dc2626;
+}
+
+.emergency-inner {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: #6b7280;
+  transition: background-color 0.3s ease;
+}
+
+.emergency-button.active .emergency-inner {
+  background-color: #fef2f2;
+}
+
+/* Line Controls */
+.line-control-panel {
+  background-color: #1e3a8a;
+}
+
+.line-status-button {
+  width: 24px;
+  height: 16px;
+  background-color: #374151;
+  border: 1px solid #6b7280;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow-indicator {
+  color: #00bcd4;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+/* Left Panel - Point Indicators */
+.point-indicators-container {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.point-indicator {
+  background-color: #374151;
+  border: 1px solid #4b5563;
+  border-radius: 4px;
+  padding: 8px;
+  width: 60px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.point-indicator:hover {
+  border-color: #6b7280;
+  transform: translateY(-1px);
+}
+
+.point-header {
+  margin-bottom: 6px;
+}
+
+.point-status-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.status-label {
+  color: #00bcd4;
+  font-size: 8px;
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+}
+
+.point-lights {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.point-light {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid #666;
+  transition: all 0.3s ease;
+}
+
+.point-light.inactive {
+  background-color: #333;
+}
+
+.point-light.active.green {
+  background-color: #4caf50;
+  box-shadow: 0 0 6px #4caf50;
+}
+
+.point-light.active.red {
+  background-color: #f44336;
+  box-shadow: 0 0 6px #f44336;
+}
+
+.point-label {
+  color: #00bcd4;
+  font-size: 8px;
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+}
+
+/* Find Controls */
+.find-controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+/* Animations */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.point-header {
+  margin-bottom: 6px;
+}
+
+.point-status-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.status-label {
+  color: #00bcd4;
+  font-size: 8px;
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+}
+
+.point-lights {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.point-light {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid #666;
+  transition: all 0.3s ease;
+}
+
+.point-light.inactive {
+  background-color: #333;
+}
+
+.point-light.active.green {
+  background-color: #4caf50;
+  box-shadow: 0 0 6px #4caf50;
+}
+
+.point-light.active.red {
+  background-color: #f44336;
+  box-shadow: 0 0 6px #f44336;
+}
+
+.point-label {
+  color: #00bcd4;
+  font-size: 8px;
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+}
+
+/* Find Controls */
+.find-controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+/* Siding Control Panel */
+.siding-control-panel {
+  background-color: #065f46;
+}
+
+.siding-info {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.siding-length {
+  color: #6ee7b7;
+  font-size: 9px;
+  font-family: 'Courier New', monospace;
+}
+
+.siding-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.status-text {
+  color: #10b981;
+  font-size: 10px;
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+}
+
+/* Line Direction Panel */
+.line-direction-panel {
+  background-color: #1e40af;
+}
+
+.direction-controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.direction-indicator {
+  text-align: center;
+}
+
+.arrow-up {
+  color: #00bcd4;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.line-label {
+  color: #00bcd4;
+  font-size: 9px;
+  font-weight: bold;
+  margin-top: 4px;
+  font-family: 'Courier New', monospace;
+}
+
+/* Animations */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
