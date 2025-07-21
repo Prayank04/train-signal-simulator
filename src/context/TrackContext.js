@@ -11,9 +11,12 @@ export const statusColors = {
 };
 
 export function TrackProvider({ children }) {
-  // Only pull in the set of recently‐reserved IDs
-  const { recentReservedTracks = new Set() } = useRouteContext() || {};
+  // We no longer need to pull reserved tracks from RouteContext for the clear logic.
+  // const { reservedTracks = new Set() } = useRouteContext() || {};
+  
   const [trackStates, setTrackStates] = useState({});
+  // New state to hold a memory of tracks that were part of a reservation.
+  const [reservedMemory, setReservedMemory] = useState(new Set());
 
   const processTrackLine = useCallback((logLine) => {
     const isReservation =
@@ -37,12 +40,24 @@ export function TrackProvider({ children }) {
         ...logLine.matchAll(/Equ\.\d+:TS\s+\[(\w+)\]/g),
       ];
       const updates = {};
+      const newReservedTracks = new Set();
       matches.forEach(m => {
         const trackId = m[1];
         updates[trackId] = 'RESERVED';
+        newReservedTracks.add(trackId);
         console.log(`🟡 Track Reserved: ${trackId} → yellow`);
       });
+      
+      // Update the visual state of the tracks
       setTrackStates(prev => ({ ...prev, ...updates }));
+
+      // Add the newly reserved tracks to our internal memory
+      setReservedMemory(prevMemory => {
+        const mergedMemory = new Set(prevMemory);
+        newReservedTracks.forEach(id => mergedMemory.add(id));
+        console.log('🧠 [TrackContext] Updated reserved memory:', mergedMemory);
+        return mergedMemory;
+      });
       return;
     }
 
@@ -61,12 +76,23 @@ export function TrackProvider({ children }) {
       const m = logLine.match(/TS\s*\[(\w+)\]/);
       if (m) {
         const trackId = m[1];
-        if (recentReservedTracks.has(trackId)) {
-          console.log(`⏳ ${trackId} was reserved, staying yellow for 120s`);
+        // Check against our new internal memory set
+        if (reservedMemory.has(trackId)) {
+          console.log(`⏳ ${trackId} was in memory, staying yellow for 120s`);
           setTrackStates(prev => ({ ...prev, [trackId]: 'RESERVED' }));
+          
           setTimeout(() => {
             console.log(`✅ ${trackId} → white after 120s`);
             setTrackStates(prev => ({ ...prev, [trackId]: 'CLEAR' }));
+            
+            // Remove the track from the memory set after the timer completes
+            setReservedMemory(prevMemory => {
+              const newMemory = new Set(prevMemory);
+              newMemory.delete(trackId);
+              console.log(`🧠 [TrackContext] Removed ${trackId} from memory. New memory:`, newMemory);
+              return newMemory;
+            });
+
           }, 120_000);
         } else {
           console.log(`⚪ Track Cleared: ${trackId} → white`);
@@ -74,11 +100,13 @@ export function TrackProvider({ children }) {
         }
       }
     }
-  }, [recentReservedTracks]);
+  }, [reservedMemory]); // Dependency is now on our internal memory set
 
   const resetTracks = useCallback(() => {
     console.log("♻️ Resetting all track states to default");
     setTrackStates({});
+    // Also reset the reserved memory
+    setReservedMemory(new Set());
   }, []);
 
   return (

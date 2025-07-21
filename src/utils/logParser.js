@@ -11,30 +11,39 @@ const ENTRY_START = /^\d{2}\/[A-Za-z]{3}\/\d{4}\s+\d{2}:\d{2}:\d{2}\.\d{3}/;
 
 export function parseLogFile(text) {
   // 1) Extract initial "From ..." timestamp
-  const lines = text.split(/\r?\n/).map(l => l.trim());
-  const fromLine = lines.find(l => /^From\s+\d{2}-[A-Za-z]{3}-\d{4}/.test(l));
+  const textLines = text.split(/\r?\n/);
+  const fromLine = textLines.find(l => /^From\s+\d{2}-[A-Za-z]{3}-\d{4}/.test(l.trim()));
   if (!fromLine) throw new Error('No "From ..." timestamp found');
-  const fromMatch = fromLine.match(/From\s+(\d{2})-([A-Za-z]{3})-(\d{4})\s+(\d{2}):(\d{2}):(\d{2})/);
+  const fromMatch = fromLine.trim().match(/From\s+(\d{2})-([A-Za-z]{3})-(\d{4})\s+(\d{2}):(\d{2}):(\d{2})/);
   if (!fromMatch) throw new Error('Invalid "From ..." format');
   const [, DD0, Mon0, YYYY0, hh0, mm0, ss0] = fromMatch;
   const initialTime = new Date(+YYYY0, MONTHS[Mon0], +DD0, +hh0, +mm0, +ss0);
 
-  // 2) Split text at each full-precision timestamp (lookahead)
-  //    Use strict month pattern to avoid gobbling extra slashes
-  const rawEntries = text
-    .split(/(?=\d{2}\/[A-Za-z]{3}\/\d{4}\s+\d{2}:\d{2}:\d{2}\.\d{3})/g)
-    .map(s => s.trim())
-    .filter(s => ENTRY_START.test(s));
+  // 2) Reconstruct entries by iterating through lines, which is more robust for PDF text extraction.
+  const allLogEntries = [];
+  textLines.forEach(line => {
+    const trimmedLine = line.trim();
+    if (trimmedLine === '') return; // Skip empty lines
 
-  // 3) Parse each entry into { time, raw }
-  const allLogEntries = rawEntries.map(full => {
-    const flat = full.replace(/\r?\n/g, ' ');
-    const m = flat.match(/^(\d{2})\/([A-Za-z]{3})\/(\d{4}) (\d{2}):(\d{2}):(\d{2})\.(\d{3})/);
-    if (!m) throw new Error('Bad entry timestamp: ' + flat.slice(0, 30));
-    const [, DD, Mon, YYYY, hh, mm, ss, mmm] = m;
-    const time = new Date(+YYYY, MONTHS[Mon], +DD, +hh, +mm, +ss, +mmm);
-    return { time, raw: flat };
+    if (ENTRY_START.test(trimmedLine)) {
+      // This line is the start of a new entry.
+      const m = trimmedLine.match(/^(\d{2})\/([A-Za-z]{3})\/(\d{4}) (\d{2}):(\d{2}):(\d{2})\.(\d{3})/);
+      if (m) {
+        const [, DD, Mon, YYYY, hh, mm, ss, mmm] = m;
+        const time = new Date(+YYYY, MONTHS[Mon], +DD, +hh, +mm, +ss, +mmm);
+        allLogEntries.push({ time, raw: trimmedLine });
+      }
+    } else if (allLogEntries.length > 0) {
+      // This is a continuation of the previous line. Append it.
+      const lastEntry = allLogEntries[allLogEntries.length - 1];
+      lastEntry.raw += ' ' + trimmedLine;
+    }
   });
+
+
+  if (allLogEntries.length === 0) {
+    console.warn("No valid log entries were parsed from the file.");
+  }
 
   return { initialTime, allLogEntries };
 }

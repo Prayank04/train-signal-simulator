@@ -32,6 +32,7 @@ import TrackSection from './TrackSection';
 import Circle from './circles'; 
 import SlantingLine from './SlantingLine';
 import SlantingLineWOper from './SlantingLineWOper';
+import TrackSectionWithBreak from "./TrackBreaks"
 
 
 
@@ -212,7 +213,7 @@ const MainTrackLayout = () => {
         <ShuntUp startX={DN_LOOP_LINE_SECTIONS[0].x - (0.1) * (DN_LOOP_LINE_SECTIONS[1].x- DN_LOOP_LINE_SECTIONS[0].x)} label="SH196" lineY={dnLoopLineY -3} />
         
         {/* 4. 296AXT */}
-        <TrackSection
+        <TrackSectionWithBreak
           sections={DN_LOOP_LINE_SECTIONS}
           TSName="296AXT"
           lineY={dnLoopLineY}
@@ -221,6 +222,11 @@ const MainTrackLayout = () => {
           ratio={0.54}
           textYOffset={-5}
           getTrackColor={getTrackColor}
+          breakBetween={{
+          xStart: DN_LOOP_LINE_SECTIONS[0].x,
+          xEnd: DN_LOOP_LINE_SECTIONS[1].x,
+          ratio: 0.3,
+  }}
         />
 
         
@@ -971,8 +977,10 @@ const MainTrackLayout = () => {
           Dnx={yardLineStart} 
           Dny={yardLine} 
           UpName="247A" 
-          DnName="247BA"
+          DnName="247B"
         />
+
+        
 
 
 

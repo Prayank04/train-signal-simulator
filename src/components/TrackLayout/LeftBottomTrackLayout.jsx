@@ -8,11 +8,11 @@ import { DNSignal, UPSignal } from './MainTrackLayout/signals';
 
  // Signal data for each line
 const Leftline1DNSignals = [
-  { name: 'A3228', sectionIndex: 0, color: 'G' },   // before sec 1
+  { name: 'A3224', sectionIndex: 0, color: 'G' },   // before sec 1
   { name: 'A3222', sectionIndex: 2, color: 'G' },   // before sec 2
   { name: 'A3220', sectionIndex: 4, color: 'G' },
-  { name: 'A3215', sectionIndex: 6, color: 'G' },
-  { name: 'A3215', sectionIndex: 8, color: 'G' },
+  { name: 'A3218', sectionIndex: 6, color: 'G' },
+  { name: 'A3216', sectionIndex: 8, color: 'G' },
   { name: 'A3214', sectionIndex: 10, color: 'G' },
   { name: 'A3212', sectionIndex: 12, color: 'G' },
   { name: 'A3210', sectionIndex: 14, color: 'G' },

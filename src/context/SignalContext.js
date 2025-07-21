@@ -15,11 +15,18 @@ export function SignalProvider({ children }) {
     console.log('📥 [Signal] raw:  ', line);
     console.log('    [Signal] clean:', cleanLine);
 
-    // 2) match ECR changes
+    // 2) match ECR changes for both 0-->1 and 1-->0
     const m = cleanLine.match(
-      /Equ\s*\.?\s*:\s*([A-Za-z0-9_]+?)\s*(RECR|HECR|HHECR|DECR)\s*Change\s*:\s*0-+>1/i
+      /Equ\s*\.?\s*:\s*([A-Za-z0-9_]+?)(RECR|HECR|HHECR|DECR)\s*Change\s*:\s*(\d-+>\d)/i
     );
-    if (!m) return;
+    
+    // 3) Exit if no match or if the change is not 0-->1
+    if (!m || m[3] !== '0-->1') {
+      if (m) {
+        console.log(`[Signal] Ignoring state change: ${m[3]} for ${m[1]}`);
+      }
+      return;
+    }
 
     const [, tag, suffix] = m;
     let color;
