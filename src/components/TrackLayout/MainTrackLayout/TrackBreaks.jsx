@@ -90,7 +90,7 @@ const createStripe = (cx, cy, i) => (
     x2={cx + (perpX * stripeLength) / 2}
     y2={cy + (perpY * stripeLength) / 2}
     stroke="white"
-    strokeWidth={1}
+    strokeWidth={0.6}
   />
 );
 
@@ -110,7 +110,7 @@ const stripes = [
         x2={breakX2}
         y2={lineY}
         stroke="#333333" // Background color
-        strokeWidth={3.1}
+        strokeWidth={5}
         strokeLinecap="butt"
       />
 
@@ -132,7 +132,7 @@ const stripes = [
       <circle
       cx={circleX}
       cy={circleY}
-      r={3.5}
+      r={3.2}
       stroke="white"
       strokeWidth={0.5}
       fill="none"
