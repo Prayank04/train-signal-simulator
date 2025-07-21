@@ -17,50 +17,31 @@ export function TimeProvider({ children }) {
     if (initialTime) {
       setCurrentTime(initialTime);
       setSentIndex(0);
-      
     }
   }, [initialTime]);
 
-  // ticker: advance clock & emit logs
+  // ticker: This effect is now only responsible for advancing the clock.
+  // The logic for advancing the sentIndex has been removed to prevent conflicts with ClockControl.jsx.
   useEffect(() => {
-  if (!running || !currentTime) return;
+    if (!running || !currentTime) return;
 
-  const id = setInterval(() => {
-    setCurrentTime(prev => {
-      const next = new Date(prev.getTime() + 1000);
-      console.log('⏱ [TimeContext] Ticking to', next.toLocaleTimeString('en-GB'));
-      return next;
-    });
-
-    setSentIndex(idx => {
-      const nextIndex = idx;
-
-      // Check if we've reached the last log entry
-      if (
-        nextIndex >= allLogEntries.length - 1
-      ) {
-        // Stop ticking and set final time
-        if (allLogEntries.length > 0) {
-          setCurrentTime(new Date(allLogEntries[allLogEntries.length - 1].time));
-        }
-        setRunning(false);  // Pause timer automatically
-        return idx;
+    const id = setInterval(() => {
+      // Automatically pause the timer if the current time has passed the last log entry.
+      if (allLogEntries.length > 0 && sentIndex >= allLogEntries.length) {
+          console.log("⏹️ [TimeContext] End of logs reached. Pausing timer.");
+          setRunning(false);
+          return;
       }
 
-      // Otherwise, keep advancing if time matches
-      if (
-        nextIndex < allLogEntries.length &&
-        allLogEntries[nextIndex].time <= new Date(currentTime.getTime() + 1000)
-      ) {
-        return nextIndex + 1;
-      }
+      setCurrentTime(prev => {
+        const next = new Date(prev.getTime() + 1000);
+        console.log('⏱ [TimeContext] Ticking to', next.toLocaleTimeString('en-GB'));
+        return next;
+      });
+    }, 1000);
 
-      return nextIndex;
-    });
-  }, 1000);
-
-  return () => clearInterval(id);
-}, [running, currentTime, allLogEntries]);
+    return () => clearInterval(id);
+  }, [running, currentTime, allLogEntries, sentIndex]);
 
 
   // actions exposed to consumers

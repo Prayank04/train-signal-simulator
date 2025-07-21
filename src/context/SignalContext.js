@@ -6,51 +6,48 @@ export function SignalProvider({ children }) {
   const [signalStates, setSignalStates] = useState({});
 
   const processLogLine = useCallback((line) => {
-  // 1) normalize
-    const cleanLine = line
-      .replace(/\r?\n/g, ' ')
-      .replace(/\s+/g, ' ')
-      .trim();
+    // 1) Normalize the line by removing extra spaces and line breaks.
+    const cleanLine = line.replace(/\r?\n/g, ' ').replace(/\s+/g, ' ').trim();
 
-    console.log('📥 [Signal] raw:  ', line);
-    console.log('    [Signal] clean:', cleanLine);
-
-    // 2) match ECR changes for both 0-->1 and 1-->0
-    const m = cleanLine.match(
-      /Equ\s*\.?\s*:\s*([A-Za-z0-9_]+?)(RECR|HECR|HHECR|DECR)\s*Change\s*:\s*(\d-+>\d)/i
+    // 2) Create a robust regex to capture the signal name and its aspect.
+    // This looks for "Equ.:" followed by the signal name, then one of the ECR statuses,
+    // and ensures the change is from 0 to 1. It handles extra spaces gracefully.
+    const match = cleanLine.match(
+      /Equ\.:\s*([\w\d_]+?)\s*(RECR|HECR|HHECR|DECR)\s*Change:\s*0\s*>\s*1/i
     );
-    
-    // 3) Exit if no match or if the change is not 0-->1
-    if (!m || m[3] !== '0-->1') {
-      if (m) {
-        console.log(`[Signal] Ignoring state change: ${m[3]} for ${m[1]}`);
-      }
-      return;
+
+    if (!match) {
+      return; // Not a signal change we are interested in.
     }
 
-    const [, tag, suffix] = m;
+    const [, signalName, aspect] = match;
+    const normalizedAspect = aspect.toUpperCase().replace(/\s+/g, ''); // Remove spaces from aspect
     let color;
 
-    switch (suffix.toUpperCase()) {
+    console.log(`[SignalContext] Matched Signal: ${signalName}, Aspect: ${normalizedAspect}`);
+
+    switch (normalizedAspect) {
       case 'RECR':
         color = 'R';
-        console.log(`🔴 [Signal] ${tag} → R`);
+        console.log(`🔴 [Signal] ${signalName} → R`);
         break;
       case 'HECR':
         color = 'Y';
-        console.log(`🟡 [Signal] ${tag} → Y`);
+        console.log(`🟡 [Signal] ${signalName} → Y`);
         break;
       case 'HHECR':
         color = 'YY';
-        console.log(`🟡🟡 [Signal] ${tag} → YY`);
+        console.log(`🟡🟡 [Signal] ${signalName} → YY`);
         break;
       case 'DECR':
         color = 'G';
-        console.log(`🟢 [Signal] ${tag} → G`);
+        console.log(`🟢 [Signal] ${signalName} → G`);
         break;
+      default:
+        return; // Unknown aspect
     }
 
-    setSignalStates(prev => ({ ...prev, [tag]: color }));
+    setSignalStates(prev => ({ ...prev, [signalName]: color }));
   }, []);
 
 

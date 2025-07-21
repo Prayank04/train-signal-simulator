@@ -809,7 +809,7 @@ const MainTrackLayout = () => {
         
         
         {/* 6. 203AXT */}
-        <TrackSection
+        <TrackSectionWithBreak
           sections={UP_LOOP_LINE_SECTIONS}
           TSName="203AXT"
           lineY={upLoopLineY}
@@ -819,6 +819,12 @@ const MainTrackLayout = () => {
           ratio = {0.15}
           fontSize={9}
           textYOffset={10}
+          direction = "down"
+          breakBetween={{
+          xStart: UP_LOOP_LINE_SECTIONS[2].x,
+          xEnd: UP_LOOP_LINE_SECTIONS[3].x,
+          ratio: 0.7,
+        }}
         />
         
         {/* 7. SH124 Signal - EXACTLY as your original function */}
@@ -901,6 +907,27 @@ const MainTrackLayout = () => {
         {/* 15. 120M OVERRUN LINE - leftmost */}
         <text x={upLoopLineStart - 110} y={upLoopLineY - 2} fill="yellow" fontSize="9" fontFamily="Arial">120M OVERRUN LINE</text>
         <text x={upLoopLineStart - 110} y={upLoopLineY + 8} fill="yellow" fontSize="9" fontFamily="Arial">(NOT FOR STABLING)</text>
+
+        {/* Yard line */}
+
+        {/* 6. 1st Sec */}
+        <TrackSectionWithBreak
+          sections={YARD_LINES_SECTIONS}
+          TSName=""
+          lineY={upLoopLineY}
+          x1={2}
+          x2={3}
+          getTrackColor={getTrackColor}
+          ratio = {0.15}
+          fontSize={9}
+          textYOffset={10}
+          direction = "down"
+          breakBetween={{
+          xStart: UP_LOOP_LINE_SECTIONS[2].x,
+          xEnd: UP_LOOP_LINE_SECTIONS[3].x,
+          ratio: 0.7,
+        }}
+        />
 
 
         <ShuntDown startX={yardLineStart + (3.5/10) * (yardLineEnd - yardLineStart)} label="SH131" lineY={yardLine} /> 

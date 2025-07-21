@@ -13,7 +13,7 @@ const TrackSectionWithBreak = ({
   fontSize = 9,
   fill = "#00bfff",
   breakBetween, // { xStart, xEnd, ratio }
-  breakLengthRatio = 0.1,
+  breakLengthRatio = 0.07,
   direction = "up", // "up" or "down"
 }) => {
   const base = (
@@ -33,7 +33,7 @@ const TrackSectionWithBreak = ({
 
   if (!breakBetween) return base;
 
-  const { xStart, xEnd, ratio: breakRatio = 0.3 } = breakBetween;
+  const { xStart, xEnd, ratio: breakRatio = 0.5 } = breakBetween;
   const breakCenterX = xStart + breakRatio * (xEnd - xStart);
   const breakLength = (xEnd - xStart) * breakLengthRatio;
   const breakX1 = breakCenterX - breakLength / 2;
@@ -67,20 +67,27 @@ const midX = (liftedX1 + liftedX2) / 2;
 const midY = (liftedY1 + liftedY2) / 2;
 
 // Move the stripes **above** the slanted line
-const liftOffset = 5; // adjust how high above the slant they are
+const liftOffset = 6;
+const circleOffset = 14;
 
-const circleOffset = 14; // how far above the slant the circle should be
+// Direction-aware lifted offsets
+const stripeLiftX = perpX * liftOffset * (direction === "up" ? -1 : 1);
+const stripeLiftY = perpY * liftOffset * (direction === "up" ? -1 : 1);
 
-const circleX = midX - perpX * circleOffset;
-const circleY = midY - perpY * circleOffset;
+const circleLiftX = perpX * circleOffset * (direction === "up" ? -1 : 1);
+const circleLiftY = perpY * circleOffset * (direction === "up" ? -1 : 1);
+
+const circleX = midX + circleLiftX;
+const circleY = midY + circleLiftY;
 
 // Draw perpendicular stripes at fixed spacing
-const spacing = 4;
+const spacing = 3.8;
 const stripeLength = 6;
 
 // Repositioned center for the 3 stripes
-const stripeCenterX = midX - perpX * liftOffset;
-const stripeCenterY = midY - perpY * liftOffset;
+const stripeCenterX = midX + stripeLiftX;
+const stripeCenterY = midY + stripeLiftY;
+
 
 const createStripe = (cx, cy, i) => (
   <line

@@ -65,14 +65,7 @@ const SlantingLineWOper = ({
         stroke="white"
         strokeWidth={0.5}
       />
-      <circle
-        cx= {Dcx}
-        cy= {Dcy}
-        r={3}
-        fill="#333333"
-        stroke="white"
-        strokeWidth={0.5}
-      />
+      
 
       <line
         x1={Uuslx}
@@ -103,32 +96,7 @@ const SlantingLineWOper = ({
 
       
 
-      <line
-        x1={Duslx}
-        y1={Dusly}
-        x2={Ddslx}
-        y2={Ddsly}
-        stroke={strokeColor}
-        strokeWidth={0.5}
-      />
-
-      <line
-        x1={Duslx - 3}
-        y1={Dusly}
-        x2={Ddslx - 3}
-        y2={Ddsly}
-        stroke={strokeColor}
-        strokeWidth={0.5}
-      />
-
-      <line
-        x1={Duslx + 3}
-        y1={Dusly}
-        x2={Ddslx + 3}
-        y2={Ddsly}
-        stroke={strokeColor}
-        strokeWidth={0.5}
-      />
+      
     </g>
   );
 };
