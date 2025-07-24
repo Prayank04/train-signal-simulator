@@ -8,7 +8,9 @@ import {
   DN_MAIN_LINE_SECTIONS,
   DN_LOOP_LINE_SECTIONS,
   UP_LOOP_LINE_SECTIONS,
-  YARD_LINES_SECTIONS
+  YARD_LINES_SECTIONS,
+  XT_LINE_SECTIONS,
+  
 } from "../../../utils/constants";
 import {
     ShuntUp,
@@ -27,7 +29,7 @@ import {
     DnLoopLineSignal
 } from './signals';
 import Triangles from './Triangles';
-import { MainLine, LoopLine, ExtraLine } from './Lines';
+import { MainLine, LoopLine, ExtraLine, XtLine } from './Lines';
 import TrackSection from './TrackSection';
 import Circle from './circles'; 
 import SlantingLine from './SlantingLine';
@@ -52,6 +54,9 @@ const {
   upLoopLineStart,
   upLoopLineEnd,
   yardLine,
+  xtline,
+  xtLineStart,
+  xtLineEnd,
   yardLineStart,
   yardLineEnd
 } = TRACK_LAYOUT_CONSTANTS;
@@ -182,6 +187,26 @@ const MainTrackLayout = () => {
 >
   (CSR 120 MIN)
 </text>
+
+{/* XT LINE JUST ABOVE UP MAIN */}
+<XtLine
+  x1={xtLineStart + 390}
+  x2={xtLineEnd + 627}
+  y={xtline}
+  label="3103XT_3101XT LINE"
+  labelX={(xtLineStart + xtLineEnd +800) / 2 - 40}
+  labelY={xtline - 5}
+  verticalEnds={[
+    [xtLineStart, xtline - 6, xtline + 6],
+    [xtLineEnd, xtline - 6, xtline + 6],
+  ]}
+  cCaps={[
+    [xtLineStart - 5, xtline - 6, xtLineStart],
+    [xtLineStart - 5, xtline + 6, xtLineStart],
+    [xtLineEnd, xtline - 6, xtLineEnd + 5],
+    [xtLineEnd, xtline + 6, xtLineEnd + 5],
+  ]}
+/>
 
 
 
@@ -820,6 +845,7 @@ const MainTrackLayout = () => {
           fontSize={9}
           textYOffset={10}
           direction = "down"
+          slantedLineRatio = {0.7}
           breakBetween={{
           xStart: UP_LOOP_LINE_SECTIONS[2].x,
           xEnd: UP_LOOP_LINE_SECTIONS[3].x,
@@ -914,18 +940,17 @@ const MainTrackLayout = () => {
         <TrackSectionWithBreak
           sections={YARD_LINES_SECTIONS}
           TSName=""
-          lineY={upLoopLineY}
-          x1={2}
-          x2={3}
+          lineY={yardLine}
+          x1={yardLineStart}
+          x2={0}
           getTrackColor={getTrackColor}
-          ratio = {0.15}
           fontSize={9}
           textYOffset={10}
           direction = "down"
           breakBetween={{
-          xStart: UP_LOOP_LINE_SECTIONS[2].x,
-          xEnd: UP_LOOP_LINE_SECTIONS[3].x,
-          ratio: 0.7,
+          xStart: yardLineStart,
+          xEnd: YARD_LINES_SECTIONS[0].x,
+          ratio: 0.02,
         }}
         />
 

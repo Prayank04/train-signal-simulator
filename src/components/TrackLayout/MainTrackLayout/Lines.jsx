@@ -53,7 +53,31 @@ function LoopLine({
     </>
   );
 }
+function XtLine({ x1, x2, y, label, labelX, labelY, fontSize = 9, verticals = [] }) {
+  return (
+    <>
+      {/* Horizontal line */}
+      <line x1={x1} y1={y} x2={x2} y2={y} stroke="white" strokeWidth="2" />
 
-export { MainLine, LoopLine, ExtraLine };
+      {/* Optional label */}
+      {label && (
+        <text x={labelX} y={labelY} fill="yellow" fontSize={fontSize} fontFamily="Arial">
+          {label}
+        </text>
+      )}
+
+      {/* Optional vertical ticks */}
+      {verticals.map(([vx, vy1, vy2], i) => (
+        <line key={`v-${i}`} x1={vx} y1={vy1} x2={vx} y2={vy2} stroke="white" strokeWidth="1" />
+      ))}
+    </>
+  );
+}
+
+
+
+
+
+export { MainLine, LoopLine, ExtraLine, XtLine};
 
 

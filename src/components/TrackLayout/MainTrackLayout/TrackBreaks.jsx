@@ -15,6 +15,7 @@ const TrackSectionWithBreak = ({
   breakBetween, // { xStart, xEnd, ratio }
   breakLengthRatio = 0.07,
   direction = "up", // "up" or "down"
+  slantedLineRatio = 1, // Controls length of slanted line (0.5 = half length, 1 = full break length)
 }) => {
   const base = (
     <TrackSection
@@ -39,111 +40,134 @@ const TrackSectionWithBreak = ({
   const breakX1 = breakCenterX - breakLength / 2;
   const breakX2 = breakCenterX + breakLength / 2;
 
-  const strokeColor = getTrackColor(TSName) || "white";
+  // Calculate the lifted line position and angle
+  const liftHeight = 12;
+  const liftAngle = 25; // degrees from horizontal
+  
+  // Shortened slanted line length
+  const slantedLineLength = breakLength * slantedLineRatio;
+  
+  // For "up": starts from left, goes up-right (northwest to southeast visually)
+  // For "down": starts from right, goes down-left (northeast to southwest visually) - mirror image
+  const liftedX1 = direction === "up" ? breakX1 : breakX2;
+  const liftedY1 = lineY;
+  const liftedX2 = direction === "up" ? breakX1 + slantedLineLength : breakX2 - slantedLineLength;
+  const liftedY2 = direction === "up" ? lineY - liftHeight : lineY + liftHeight;
 
-  // Lifted line geometry
-  const slantLength = breakX2 - breakX1;
-  const liftHeight = 9 * (direction === "up" ? -1 : 1); // Y offset based on direction
+  // Direction vectors for the lifted line
+  const dx = liftedX2 - liftedX1;
+  const dy = liftedY2 - liftedY1;
+  const lineLength = Math.sqrt(dx * dx + dy * dy);
+  const ux = dx / lineLength; // unit vector along lifted line
+  const uy = dy / lineLength;
 
-  // Start and end of the lifted slant
-const liftedX1 = breakX1;
-const liftedY1 = lineY;
-const liftedX2 = breakX2 - 3;
-const liftedY2 = lineY + liftHeight;
+  // Perpendicular vector (for stripes)
+  const perpX = -uy;
+  const perpY = ux;
 
-// Direction vector (unit)
-const dx = liftedX2 - liftedX1;
-const dy = liftedY2 - liftedY1;
-const len = Math.sqrt(dx * dx + dy * dy);
-const ux = dx / len;
-const uy = dy / len;
+  // Position for stripes and circle
+  const stripeMidX = (liftedX1 + liftedX2) / 2;
+  const stripeMidY = (liftedY1 + liftedY2) / 2;
+  
+  // Offset stripes perpendicular to the lifted line
+  // For "up": stripes go above the line 
+  // For "down": stripes go below the line (always downward in screen coordinates)
+  const stripeOffset = 8;
+  let stripeBaseX, stripeBaseY;
+  
+  if (direction === "up") {
+    // Above the line (perpendicular offset upward)
+    stripeBaseX = stripeMidX + perpX * stripeOffset * -1;
+    stripeBaseY = stripeMidY + perpY * stripeOffset * -1;
+  } else {
+    // Below the line (perpendicular offset but ensuring it goes downward)
+    const downwardPerpX = perpX * (perpY > 0 ? 1 : -1);
+    const downwardPerpY = Math.abs(perpY);
+    stripeBaseX = stripeMidX + downwardPerpX * stripeOffset;
+    stripeBaseY = stripeMidY + downwardPerpY * stripeOffset;
+  }
 
-// Perpendicular (normal)
-const perpX = -uy;
-const perpY = ux;
+  // Circle position (further from the line in the same direction as stripes)
+  const circleOffset = 18;
+  let circleX, circleY;
+  
+  if (direction === "up") {
+    circleX = stripeMidX + perpX * circleOffset * -1;
+    circleY = stripeMidY + perpY * circleOffset * -1;
+  } else {
+    const downwardPerpX = perpX * (perpY > 0 ? 1 : -1);
+    const downwardPerpY = Math.abs(perpY);
+    circleX = stripeMidX + downwardPerpX * circleOffset;
+    circleY = stripeMidY + downwardPerpY * circleOffset;
+  }
 
-// Center of slant
-const midX = (liftedX1 + liftedX2) / 2;
-const midY = (liftedY1 + liftedY2) / 2;
+  // Create three parallel stripes
+  const stripeSpacing = 4;
+  const stripeLength = 8;
+  const stripeAngle = Math.atan2(perpY, perpX);
 
-// Move the stripes **above** the slanted line
-const liftOffset = 6;
-const circleOffset = 14;
+  const createStripe = (offsetAlongLine, key) => {
+    const cx = stripeBaseX + ux * offsetAlongLine;
+    const cy = stripeBaseY + uy * offsetAlongLine;
+    
+    return (
+      <line
+        key={key}
+        x1={cx - Math.cos(stripeAngle) * stripeLength / 2}
+        y1={cy - Math.sin(stripeAngle) * stripeLength / 2}
+        x2={cx + Math.cos(stripeAngle) * stripeLength / 2}
+        y2={cy + Math.sin(stripeAngle) * stripeLength / 2}
+        stroke="white"
+        strokeWidth={0.5}
+        strokeLinecap="round"
+      />
+    );
+  };
 
-// Direction-aware lifted offsets
-const stripeLiftX = perpX * liftOffset * (direction === "up" ? -1 : 1);
-const stripeLiftY = perpY * liftOffset * (direction === "up" ? -1 : 1);
+  const stripes = [
+    createStripe(-stripeSpacing, "left"),
+    createStripe(0, "center"),
+    createStripe(stripeSpacing, "right"),
+  ];
 
-const circleLiftX = perpX * circleOffset * (direction === "up" ? -1 : 1);
-const circleLiftY = perpY * circleOffset * (direction === "up" ? -1 : 1);
-
-const circleX = midX + circleLiftX;
-const circleY = midY + circleLiftY;
-
-// Draw perpendicular stripes at fixed spacing
-const spacing = 3.8;
-const stripeLength = 6;
-
-// Repositioned center for the 3 stripes
-const stripeCenterX = midX + stripeLiftX;
-const stripeCenterY = midY + stripeLiftY;
-
-
-const createStripe = (cx, cy, i) => (
-  <line
-    key={i}
-    x1={cx - (perpX * stripeLength) / 2}
-    y1={cy - (perpY * stripeLength) / 2}
-    x2={cx + (perpX * stripeLength) / 2}
-    y2={cy + (perpY * stripeLength) / 2}
-    stroke="white"
-    strokeWidth={0.6}
-  />
-);
-
-const stripes = [
-  createStripe(stripeCenterX, stripeCenterY, "mid"),
-  createStripe(stripeCenterX - ux * spacing, stripeCenterY - uy * spacing, "left"),
-  createStripe(stripeCenterX + ux * spacing, stripeCenterY + uy * spacing, "right"),
-];
   return (
     <>
       {base}
 
-      {/* Mask the track with background color */}
+      {/* Mask the original track line with background color */}
       <line
         x1={breakX1}
         y1={lineY}
         x2={breakX2}
         y2={lineY}
-        stroke="#333333" // Background color
-        strokeWidth={5}
+        stroke="#333333" // Background color to hide the track
+        strokeWidth={4}
         strokeLinecap="butt"
       />
 
-      {/* Slanting lifted line */}
+      {/* Lifted track section */}
       <line
-        x1={breakX1}
-        y1={lineY}
-        x2={breakX2 - 3}
-        y2={lineY + liftHeight}
+        x1={liftedX1}
+        y1={liftedY1}
+        x2={liftedX2}
+        y2={liftedY2}
         stroke="white"
         strokeWidth={3}
         strokeLinecap="round"
       />
 
-      {/* Perpendicular lifted stripes above slant */}
+      {/* Three parallel stripes perpendicular to the lifted line */}
       {stripes}
 
-      {/* Center circle on slant */}
+      {/* Circle above/below the stripes */}
       <circle
-      cx={circleX}
-      cy={circleY}
-      r={3.2}
-      stroke="white"
-      strokeWidth={0.5}
-      fill="none"
-    />
+        cx={circleX}
+        cy={circleY}
+        r={3.2}
+        stroke="white"
+        strokeWidth={0.5}
+        fill="none"
+      />
     </>
   );
 };

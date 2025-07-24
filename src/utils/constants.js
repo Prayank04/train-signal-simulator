@@ -53,6 +53,7 @@ export const TRACK_LAYOUT_CONSTANTS = {
   upMainLineY: 140,
   upLoopLineY: 190,
   yardLine:240,
+  xtline:130,
   signalOffsetY: 12,
 
   mainlineStart: BASE_MAINLINE_START,
@@ -63,7 +64,8 @@ export const TRACK_LAYOUT_CONSTANTS = {
   upLoopLineEnd: BASE_MAINLINE_END - (BASE_MAINLINE_END - BASE_MAINLINE_START)/ 4.1,
   yardLineStart:  BASE_MAINLINE_START + (BASE_MAINLINE_END - BASE_MAINLINE_START) / 2.025,
   yardLineEnd : BASE_MAINLINE_START + 2.75 * (BASE_MAINLINE_END - BASE_MAINLINE_START) / 5,
-
+  xtLineStart : BASE_MAINLINE_START + (BASE_MAINLINE_END - BASE_MAINLINE_START) / 2.1,
+  xtLineEnd : BASE_MAINLINE_START + 2.65 * (BASE_MAINLINE_END - BASE_MAINLINE_START) / 5,
 
 
   leftbot_lineStart: BASE_MAINLINE_START - 26,
@@ -121,6 +123,13 @@ export const UP_LOOP_LINE_SECTIONS = [
 export const YARD_LINES_SECTIONS = [
   {x : TRACK_LAYOUT_CONSTANTS.yardLineStart + (TRACK_LAYOUT_CONSTANTS.yardLineEnd - TRACK_LAYOUT_CONSTANTS.yardLineStart)/2.2, label: 'Yard Line'}
 ]
+
+export const XT_LINE_SECTIONS = [
+  {
+    x: TRACK_LAYOUT_CONSTANTS.xtLineStart + (0.15) * (TRACK_LAYOUT_CONSTANTS.xtLineEnd - TRACK_LAYOUT_CONSTANTS.xtLineStart) / 1.0,
+  }
+];
+
 
 // DN MAIN LINE arrows (right to left) - LEFT-facing
 export const DN_MAIN_LINE_ARROWS = [

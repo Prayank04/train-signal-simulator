@@ -40,7 +40,7 @@ railway-control-hmi/
 │   │   └── useTimer.js
 │   ├── utils/
 │   │   ├── api.js                        # includes signaling API calls
-│   │   └── Constants.js                  # parsing utilities
+│   │   └──                   # parsing utilities
 │   ├── styles/
 │   │   ├── globals.css
 │   │   └── variables.css
