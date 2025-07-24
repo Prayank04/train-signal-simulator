@@ -183,30 +183,30 @@ export default function StatusBar() {
         <ClockControl />
       </div>
         
-<div className="status-right flex items-center" style={{ marginLeft: '90px' }}>
-  <div className="mr-4">
-   <label className="cursor-pointer" style={{ marginLeft: '90px' }}>
-      Upload Log
-      <input
-        type="file"
-        accept=".xps, .txt, .pdf"
-        onChange={handleUpload}
-        className="hidden"
-      />
-    </label>
-  </div>
-  <div className="ml- 4"> {/* <-- This adds space before Excel upload */}
-    <label className="cursor-pointer" style={{ marginLeft: '90px' }}>
-      Upload Excel
-      <input
-        type="file"
-        accept=".xlsx, .xls"
-        onChange={handleExcelUpload}
-        className="hidden"
-      />
-    </label>
-  </div>
-</div>
+      <div className="status-right flex items-center" style={{ marginLeft: '90px' }}>
+        <div className="mr-4">
+        <label className="cursor-pointer" style={{ marginLeft: '90px' }}>
+            Upload Log
+            <input
+              type="file"
+              accept=".xps, .txt, .pdf"
+              onChange={handleUpload}
+              className="hidden"
+            />
+          </label>
+        </div>
+        <div className="ml- 4"> {/* <-- This adds space before Excel upload */}
+          <label className="cursor-pointer" style={{ marginLeft: '90px' }}>
+            Upload Excel
+            <input
+              type="file"
+              accept=".xlsx, .xls"
+              onChange={handleExcelUpload}
+              className="hidden"
+            />
+          </label>
+        </div>
+      </div>
 
        {parseError && (
         <div className="error-banner w-full bg-red-800 text-white text-center p-2">

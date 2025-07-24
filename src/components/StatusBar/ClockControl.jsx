@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import { TimeContext } from '../../context/TimeContext';
 import { useSignalContext } from '../../context/SignalContext';
-import { useTrackContext } from '../../context/TrackContext';
-import { useRouteContext } from '../../context/RouteContext'; // Assuming this is where parseRouteLine is defined
-import { use } from 'react';
+import { useTrackContext } from '../../context/TrackContext'; // Changed from useRouteContext
 
 export default function ClockControl() {
   const {
@@ -18,14 +16,13 @@ export default function ClockControl() {
     running
   } = useContext(TimeContext);
 
-  const { parseRouteLine } = useRouteContext();
+  // Get all necessary functions from useTrackContext now
+  const { processTrackLine, parseRouteLine, resetTracks } = useTrackContext();
   const { processLogLine, resetSignals } = useSignalContext();
-  const { processTrackLine, resetTracks } = useTrackContext();
   
-
   const didReset = useRef(false);
 
-  // ✅ Reset logic once
+  // Reset logic once
   useEffect(() => {
     if (initialTime && !didReset.current) {
       console.log("🔄 Initial Time detected. Resetting once.");
@@ -36,7 +33,7 @@ export default function ClockControl() {
     }
   }, [initialTime, stop, resetSignals, resetTracks]);
 
-  // ✅ Clear reset flag when new file uploaded
+  // Clear reset flag when new file uploaded
   useEffect(() => {
     didReset.current = false;
   }, [initialTime]);
@@ -52,7 +49,7 @@ export default function ClockControl() {
     let idx = sentIndex;
     while (idx < allLogEntries.length && allLogEntries[idx].time <= currentTime) {
       console.log(`✅ [ClockControl] Processing entry ${idx}:`, allLogEntries[idx].raw);
-      parseRouteLine(allLogEntries[idx].raw);
+      parseRouteLine(allLogEntries[idx].raw); // This now comes from TrackContext
       processLogLine(allLogEntries[idx].raw);
       processTrackLine(allLogEntries[idx].raw);
       idx++;
@@ -62,7 +59,7 @@ export default function ClockControl() {
       console.log(`➡️ [ClockControl] advancing sentIndex to ${idx}`);
       setSentIndex(idx);
     }
-  }, [currentTime, running, allLogEntries, sentIndex, processLogLine, processTrackLine, setSentIndex]);
+  }, [currentTime, running, allLogEntries, sentIndex, processLogLine, processTrackLine, parseRouteLine, setSentIndex]);
 
   return (
     <div className="flex space-x-4">

@@ -9,8 +9,8 @@ import {
   DN_LOOP_LINE_SECTIONS,
   UP_LOOP_LINE_SECTIONS,
   YARD_LINES_SECTIONS,
-  XT_LINE_SECTIONS,
   
+
 } from "../../../utils/constants";
 import {
     ShuntUp,
@@ -29,7 +29,7 @@ import {
     DnLoopLineSignal
 } from './signals';
 import Triangles from './Triangles';
-import { MainLine, LoopLine, ExtraLine, XtLine } from './Lines';
+import { MainLine, LoopLine, ExtraLine, XtLine, CxtLine ,AxtLine, TwoxtLine}  from './Lines';
 import TrackSection from './TrackSection';
 import Circle from './circles'; 
 import SlantingLine from './SlantingLine';
@@ -58,7 +58,17 @@ const {
   xtLineStart,
   xtLineEnd,
   yardLineStart,
-  yardLineEnd
+  yardLineEnd,
+  cxtline,
+  cxtLineEnd,
+  cxtLineStart,
+  axtline,
+  axtLineStart,
+  axtLineEnd,
+  twoxtline,
+  twoxtLineEnd,
+  twoxtLineStart,
+
 } = TRACK_LAYOUT_CONSTANTS;
 
 
@@ -207,7 +217,37 @@ const MainTrackLayout = () => {
     [xtLineEnd, xtline + 6, xtLineEnd + 5],
   ]}
 />
-
+{/* CXT LINE JUST BELOW 3103XT_3101XT LINE */}
+<CxtLine
+  x1={cxtLineStart + 450}
+  x2={cxtLineEnd +372}
+  y={cxtline + 18}
+  label="CXT LINE"
+  labelX={(cxtLineStart + cxtLineEnd) / 2 - 30}
+  labelY={cxtline - 5}
+  
+  // No cCaps here as per your instruction
+/>
+{/* AXT LINE JUST ABOVE XT LINE */}
+<AxtLine
+  x1={axtLineStart + 460}
+  x2={axtLineEnd + 547}
+  y={axtline - 18}  // slightly above the XT line
+  label="AXT LINE"
+  labelX={(axtLineStart + axtLineEnd + 995) / 2 - 30}
+  labelY={axtline - 24}
+  
+/>
+{/* TWOXT LINE JUST ABOVE AXT LINE */}
+<TwoxtLine
+  x1={twoxtLineStart + 382}
+  x2={twoxtLineEnd + 400}
+  y={twoxtline - 36} // higher than AXT line
+  label="TWOXT LINE"
+  labelX={(twoxtLineStart + twoxtLineEnd + 1025) / 2 - 30}
+  labelY={twoxtline - 42}
+  
+/>
 
 
         

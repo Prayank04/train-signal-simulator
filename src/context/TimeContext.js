@@ -8,9 +8,10 @@ export function TimeProvider({ children }) {
   const [currentTime, setCurrentTime] = useState(null);
   const [allLogEntries, setAllLogEntries] = useState([]); 
   const [sentIndex, setSentIndex] = useState(0);
-
-  // new: running state
   const [running, setRunning] = useState(true);
+  
+  // New state to hold data from the uploaded Excel file
+  const [excelData, setExcelData] = useState(null);
 
   // If initialTime changes (i.e. file upload), reset currentTime & sentIndex
   useEffect(() => {
@@ -21,7 +22,6 @@ export function TimeProvider({ children }) {
   }, [initialTime]);
 
   // ticker: This effect is now only responsible for advancing the clock.
-  // The logic for advancing the sentIndex has been removed to prevent conflicts with ClockControl.jsx.
   useEffect(() => {
     if (!running || !currentTime) return;
 
@@ -72,7 +72,8 @@ export function TimeProvider({ children }) {
       currentTime, setCurrentTime,
       allLogEntries, setAllLogEntries,
       sentIndex, setSentIndex,
-      running, start, pause, stop
+      running, start, pause, stop,
+      excelData, setExcelData // Expose Excel data and its setter
     }}>
       {children}
     </TimeContext.Provider>

@@ -53,7 +53,10 @@ export const TRACK_LAYOUT_CONSTANTS = {
   upMainLineY: 140,
   upLoopLineY: 190,
   yardLine:240,
-  xtline:130,
+  xtline:120,
+  cxtline:110,
+  axtline:130,
+  twoxtline:140,
   signalOffsetY: 12,
 
   mainlineStart: BASE_MAINLINE_START,
@@ -66,6 +69,12 @@ export const TRACK_LAYOUT_CONSTANTS = {
   yardLineEnd : BASE_MAINLINE_START + 2.75 * (BASE_MAINLINE_END - BASE_MAINLINE_START) / 5,
   xtLineStart : BASE_MAINLINE_START + (BASE_MAINLINE_END - BASE_MAINLINE_START) / 2.1,
   xtLineEnd : BASE_MAINLINE_START + 2.65 * (BASE_MAINLINE_END - BASE_MAINLINE_START) / 5,
+  cxtLineStart: BASE_MAINLINE_START + (BASE_MAINLINE_END - BASE_MAINLINE_START) / 1.8,
+  cxtLineEnd: BASE_MAINLINE_START + 2.85 * (BASE_MAINLINE_END - BASE_MAINLINE_START) / 5,
+  axtLineStart: BASE_MAINLINE_START + (BASE_MAINLINE_END - BASE_MAINLINE_START) / 1.95,
+  axtLineEnd: BASE_MAINLINE_START + 2.95 * (BASE_MAINLINE_END - BASE_MAINLINE_START) / 5,
+  twoxtLineStart: BASE_MAINLINE_START + (BASE_MAINLINE_END - BASE_MAINLINE_START) / 1.75,
+  twoxtLineEnd: BASE_MAINLINE_START + 3.05 * (BASE_MAINLINE_END - BASE_MAINLINE_START) / 5,
 
 
   leftbot_lineStart: BASE_MAINLINE_START - 26,
@@ -124,11 +133,6 @@ export const YARD_LINES_SECTIONS = [
   {x : TRACK_LAYOUT_CONSTANTS.yardLineStart + (TRACK_LAYOUT_CONSTANTS.yardLineEnd - TRACK_LAYOUT_CONSTANTS.yardLineStart)/2.2, label: 'Yard Line'}
 ]
 
-export const XT_LINE_SECTIONS = [
-  {
-    x: TRACK_LAYOUT_CONSTANTS.xtLineStart + (0.15) * (TRACK_LAYOUT_CONSTANTS.xtLineEnd - TRACK_LAYOUT_CONSTANTS.xtLineStart) / 1.0,
-  }
-];
 
 
 // DN MAIN LINE arrows (right to left) - LEFT-facing
