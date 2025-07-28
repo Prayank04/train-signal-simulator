@@ -8,6 +8,8 @@ import {
   DN_MAIN_LINE_SECTIONS,
   DN_LOOP_LINE_SECTIONS,
   UP_LOOP_LINE_SECTIONS,
+  DN_MAIN_EXTRA_SECTIONS,
+  UP_MAIN_EXTRA_SECTIONS,
   YARD_LINES_SECTIONS,
   
 
@@ -198,57 +200,147 @@ const MainTrackLayout = () => {
   (CSR 120 MIN)
 </text>
 
-{/* XT LINE JUST ABOVE UP MAIN */}
-<XtLine
-  x1={xtLineStart + 390}
-  x2={xtLineEnd + 627}
-  y={xtline}
-  label="3103XT_3101XT LINE"
-  labelX={(xtLineStart + xtLineEnd +800) / 2 - 40}
-  labelY={xtline - 5}
-  verticalEnds={[
-    [xtLineStart, xtline - 6, xtline + 6],
-    [xtLineEnd, xtline - 6, xtline + 6],
+  {/* Vertical section markers for DN MAIN LINE */}
+  <VerticalSections
+  positions={[
+    { x: DN_MAIN_EXTRA_SECTIONS[0].x, y: dnMainLineY + 10 },
+    { x: DN_MAIN_EXTRA_SECTIONS[1].x, y: dnMainLineY + 10 },
+    { x: DN_MAIN_EXTRA_SECTIONS[2].x, y: dnMainLineY + 22 },
+    { x: DN_MAIN_EXTRA_SECTIONS[3].x, y: dnMainLineY + 10 },
+    { x: DN_MAIN_EXTRA_SECTIONS[4].x, y: dnMainLineY + 10 },
+    { x: DN_MAIN_EXTRA_SECTIONS[5].x, y: dnMainLineY + 22 }
   ]}
-  cCaps={[
-    [xtLineStart - 5, xtline - 6, xtLineStart],
-    [xtLineStart - 5, xtline + 6, xtLineStart],
-    [xtLineEnd, xtline - 6, xtLineEnd + 5],
-    [xtLineEnd, xtline + 6, xtLineEnd + 5],
-  ]}
-/>
-{/* CXT LINE JUST BELOW 3103XT_3101XT LINE */}
-<CxtLine
-  x1={cxtLineStart + 450}
-  x2={cxtLineEnd +372}
-  y={cxtline + 18}
-  label="CXT LINE"
-  labelX={(cxtLineStart + cxtLineEnd) / 2 - 30}
-  labelY={cxtline - 5}
-  
-  // No cCaps here as per your instruction
-/>
-{/* AXT LINE JUST ABOVE XT LINE */}
-<AxtLine
-  x1={axtLineStart + 460}
-  x2={axtLineEnd + 547}
-  y={axtline - 18}  // slightly above the XT line
-  label="AXT LINE"
-  labelX={(axtLineStart + axtLineEnd + 995) / 2 - 30}
-  labelY={axtline - 24}
-  
-/>
-{/* TWOXT LINE JUST ABOVE AXT LINE */}
-<TwoxtLine
-  x1={twoxtLineStart + 382}
-  x2={twoxtLineEnd + 400}
-  y={twoxtline - 36} // higher than AXT line
-  label="TWOXT LINE"
-  labelX={(twoxtLineStart + twoxtLineEnd + 1025) / 2 - 30}
-  labelY={twoxtline - 42}
-  
+  lineHeight={8}
 />
 
+{/* Vertical section markers for UP MAIN LINE */}
+  <VerticalSections
+  positions={[
+    { x: UP_MAIN_EXTRA_SECTIONS[0].x, y: upMainLineY - 20 },
+    { x: UP_MAIN_EXTRA_SECTIONS[1].x, y: upMainLineY + 10 },
+    { x: UP_MAIN_EXTRA_SECTIONS[0].x, y: upMainLineY + 10 },
+    { x: UP_MAIN_EXTRA_SECTIONS[3].x, y: upMainLineY - 20 },
+    { x: UP_MAIN_EXTRA_SECTIONS[4].x, y: upMainLineY - 10 },
+    { x: UP_MAIN_EXTRA_SECTIONS[5].x, y: upMainLineY - 10 }
+  ]}
+  lineHeight={8}
+/>
+
+
+
+ {/*  C98XT */}
+  <TrackSection
+  sections={DN_MAIN_EXTRA_SECTIONS}
+  TSName="C98XT"
+  lineY={dnMainLineY + 10}
+  x1={0}
+  x2={1}
+  ratio={-0.5}         // Centered between section 1 and 2
+  textYOffset={5}    // Place text below the line
+  getTrackColor={getTrackColor}
+  fontSize={9}
+  />
+
+   {/*  3204XT_3202XT */}
+  <TrackSection
+  sections={DN_MAIN_EXTRA_SECTIONS}
+  TSName="3204XT_3202XT"
+  lineY={dnMainLineY + 22}
+  x1={mainlineStart}
+  x2={2}
+  ratio={0.75}         // Centered between section 1 and 2
+  textYOffset={10}    // Place text below the line
+  getTrackColor={getTrackColor}
+  fontSize={8}
+  />
+
+   {/*  2XT */}
+  <TrackSection
+  sections={DN_MAIN_EXTRA_SECTIONS}
+  TSName="2XT"
+  lineY={dnMainLineY + 10}
+  x1={3}
+  x2={4}
+  ratio={-0.2}         // Centered between section 1 and 2
+  textYOffset={5}    // Place text below the line
+  getTrackColor={getTrackColor}
+  fontSize={9}
+  />
+
+   {/*  2AXT_3114XT */}
+  <TrackSection
+  sections={DN_MAIN_EXTRA_SECTIONS}
+  TSName="2AXT_3114XT"
+  lineY={dnMainLineY + 22}
+  x1={3}
+  x2={mainlineEnd}
+  ratio={0.55}         // Centered between section 1 and 2
+  textYOffset={-5}    // Place text below the line
+  getTrackColor={getTrackColor}
+  fontSize={8}
+  />
+
+  {/* 99AXT_3229XT */}
+  <TrackSection
+  sections={UP_MAIN_EXTRA_SECTIONS}
+  TSName="99AXT_3229XT"
+  lineY={upMainLineY - 20}
+  x1={mainlineStart}
+  x2={0}
+  ratio={0.35}         // Centered between section 1 and 2
+  textYOffset={10}    // Place text below the line
+  getTrackColor={getTrackColor}
+  fontSize={8}
+  />
+
+  {/*  99XT */}
+  <TrackSection
+  sections={UP_MAIN_EXTRA_SECTIONS}
+  TSName="99XT"
+  lineY={upMainLineY + 10}
+  x1={1}
+  x2={2}
+  ratio={0.35}         // Centered between section 1 and 2
+  textYOffset={-2}    // Place text below the line
+  getTrackColor={getTrackColor}
+  fontSize={8}
+  />
+
+  {/*  3103XT_3101XT */}
+  <TrackSection
+  sections={UP_MAIN_EXTRA_SECTIONS}
+  TSName="3103XT_3101XT"
+  lineY={upMainLineY - 20}
+  x1={3}
+  x2={mainlineEnd}
+  ratio={0.2}         // Centered between section 1 and 2
+  textYOffset={-5}    // Place text below the line
+  getTrackColor={getTrackColor}
+  fontSize={9}
+  />
+
+  {/* C1XT */}
+  <TrackSection
+  sections={UP_MAIN_EXTRA_SECTIONS}
+  TSName="C1XT"
+  lineY={upMainLineY - 10}
+  x1={4}
+  x2={5}
+  ratio={1.3}         // Centered between section 1 and 2
+  textYOffset={2}    // Place text below the line
+  getTrackColor={getTrackColor}
+  fontSize={8}
+  />
+
+
+
+  
+
+
+
+
+      
+  
 
         
 
@@ -637,8 +729,8 @@ const MainTrackLayout = () => {
           lineY={upMainLineY}
           x1={8}
           x2={10}
-          ratio={0.5}           // Adjust as needed for label position
-          textYOffset={-5}      // Matches your original text y offset
+          ratio={0.37}           // Adjust as needed for label position
+          textYOffset={10}      // Matches your original text y offset
           getTrackColor={getTrackColor}
           fontSize={9}
         />

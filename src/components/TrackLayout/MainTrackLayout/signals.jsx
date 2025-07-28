@@ -478,7 +478,7 @@ function UpLoopLineSignal({ startX, label = "S39/SH139", lineY = upLoopLineY, in
     // Use your existing InitialColors function
     const fillColors = InitialColors(lineY, currentColor);
 
-    const signalY = dnMainLineY - Math.abs(signalOffsetY);
+    const signalY = dnMainLineY - Math.abs(signalOffsetY) - 10;
 
     // S98/SH198 or custom label - Exact mirror image of S1/C1
     const x1 = startX; // First circle (leftmost, with red fill)
@@ -1397,7 +1397,7 @@ function S1C1Signal({ startX, label, lineY = upMainLineY, initialColor = 'R', si
     // Use InitialColors for correct aspect order
     const fillColors = InitialColors(lineY + signalOffsetY, currentColor);
 
-    const signalY = lineY + signalOffsetY; // 12px below UP line
+    const signalY = lineY + signalOffsetY + 10; // 12px below UP line
 
     const x4 = startX + 3 * spacing;
     const x5 = x4 + spacing + 8;

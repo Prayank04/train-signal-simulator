@@ -99,7 +99,18 @@ export const UP_MAIN_LINE_SECTIONS = [
   { x: TRACK_LAYOUT_CONSTANTS.mainlineStart + (12.55)*(TRACK_LAYOUT_CONSTANTS.mainlineEnd - TRACK_LAYOUT_CONSTANTS.mainlineStart)/16.3, label: 'After UW' },
   { x: TRACK_LAYOUT_CONSTANTS.mainlineStart + (13.85)*(TRACK_LAYOUT_CONSTANTS.mainlineEnd - TRACK_LAYOUT_CONSTANTS.mainlineStart)/16.3, label: 'Above "C" circle in S1/C1 signal' },
   { x: TRACK_LAYOUT_CONSTANTS.mainlineStart + (15.2)*(TRACK_LAYOUT_CONSTANTS.mainlineEnd - TRACK_LAYOUT_CONSTANTS.mainlineStart)/16.3, label: 'Above 4th circle of 3101A' },
-  { x: TRACK_LAYOUT_CONSTANTS.mainlineStart + (15.4)*(TRACK_LAYOUT_CONSTANTS.mainlineEnd - TRACK_LAYOUT_CONSTANTS.mainlineStart)/16.3, label: 'Above "A" circle of 3101A' }
+  { x: TRACK_LAYOUT_CONSTANTS.mainlineStart + (15.4)*(TRACK_LAYOUT_CONSTANTS.mainlineEnd - TRACK_LAYOUT_CONSTANTS.mainlineStart)/16.3, label: 'Above "A" circle of 3101A' },
+
+];
+
+export const UP_MAIN_EXTRA_SECTIONS = [
+
+  {x: TRACK_LAYOUT_CONSTANTS.mainlineStart + (TRACK_LAYOUT_CONSTANTS.mainlineEnd - TRACK_LAYOUT_CONSTANTS.mainlineStart)/16.3, label: '99AXT_3229XT Start'},
+  {x: TRACK_LAYOUT_CONSTANTS.mainlineStart + (0.4)* (TRACK_LAYOUT_CONSTANTS.mainlineEnd - TRACK_LAYOUT_CONSTANTS.mainlineStart)/16.3, label: '99XT Start'}, 
+  {x: TRACK_LAYOUT_CONSTANTS.mainlineStart + (TRACK_LAYOUT_CONSTANTS.mainlineEnd - TRACK_LAYOUT_CONSTANTS.mainlineStart)/16.3, label: '99XT End'},
+  { x: TRACK_LAYOUT_CONSTANTS.mainlineStart + (12.55)*(TRACK_LAYOUT_CONSTANTS.mainlineEnd - TRACK_LAYOUT_CONSTANTS.mainlineStart)/16.3, label: '3103XT_3101XT Start' },
+  { x: TRACK_LAYOUT_CONSTANTS.mainlineStart + (13.85)*(TRACK_LAYOUT_CONSTANTS.mainlineEnd - TRACK_LAYOUT_CONSTANTS.mainlineStart)/16.3, label: 'C1XT Start' },
+  { x: TRACK_LAYOUT_CONSTANTS.mainlineStart + (14.39)*(TRACK_LAYOUT_CONSTANTS.mainlineEnd - TRACK_LAYOUT_CONSTANTS.mainlineStart)/16.3, label: 'C1XT End' }
 ];
 
 export const DN_MAIN_LINE_SECTIONS = [
@@ -113,7 +124,20 @@ export const DN_MAIN_LINE_SECTIONS = [
   { x: TRACK_LAYOUT_CONSTANTS.mainlineStart + (11.68)*(TRACK_LAYOUT_CONSTANTS.mainlineEnd - TRACK_LAYOUT_CONSTANTS.mainlineStart)/16.3, label: 'Just before A2XT' },
   { x: TRACK_LAYOUT_CONSTANTS.mainlineStart + (14)*(TRACK_LAYOUT_CONSTANTS.mainlineEnd - TRACK_LAYOUT_CONSTANTS.mainlineStart)/16.3, label: 'At S2' },
   { x: TRACK_LAYOUT_CONSTANTS.mainlineStart + (15.4)*(TRACK_LAYOUT_CONSTANTS.mainlineEnd - TRACK_LAYOUT_CONSTANTS.mainlineStart)/16.3, label: 'On signal A3114 (first line)' },
-  { x: TRACK_LAYOUT_CONSTANTS.mainlineStart + (15.6)*(TRACK_LAYOUT_CONSTANTS.mainlineEnd - TRACK_LAYOUT_CONSTANTS.mainlineStart)/16.3, label: 'On signal A3114 (second line)' }
+  { x: TRACK_LAYOUT_CONSTANTS.mainlineStart + (15.6)*(TRACK_LAYOUT_CONSTANTS.mainlineEnd - TRACK_LAYOUT_CONSTANTS.mainlineStart)/16.3, label: 'On signal A3114 (second line)' },
+
+
+
+];
+
+export const DN_MAIN_EXTRA_SECTIONS = [
+
+  {x: TRACK_LAYOUT_CONSTANTS.mainlineStart + (0.5)* (TRACK_LAYOUT_CONSTANTS.mainlineEnd - TRACK_LAYOUT_CONSTANTS.mainlineStart)/16.3, label: 'C98XT Start'},
+  {x: TRACK_LAYOUT_CONSTANTS.mainlineStart + (TRACK_LAYOUT_CONSTANTS.mainlineEnd - TRACK_LAYOUT_CONSTANTS.mainlineStart)/16.3, label: 'C98XT End'},
+  {x: TRACK_LAYOUT_CONSTANTS.mainlineStart + (1.9)*(TRACK_LAYOUT_CONSTANTS.mainlineEnd - TRACK_LAYOUT_CONSTANTS.mainlineStart)/16.3, label: '3204XT_3202XT End' },
+  {x: TRACK_LAYOUT_CONSTANTS.mainlineStart + (14)*(TRACK_LAYOUT_CONSTANTS.mainlineEnd - TRACK_LAYOUT_CONSTANTS.mainlineStart)/16.3, label: '2XT Start' },
+  {x: TRACK_LAYOUT_CONSTANTS.mainlineStart + (14.8)*(TRACK_LAYOUT_CONSTANTS.mainlineEnd - TRACK_LAYOUT_CONSTANTS.mainlineStart)/16.3, label: '2XT End' },
+  {x: TRACK_LAYOUT_CONSTANTS.mainlineStart + (14)*(TRACK_LAYOUT_CONSTANTS.mainlineEnd - TRACK_LAYOUT_CONSTANTS.mainlineStart)/16.3, label: '2AXT_3114XT Start' }
 ];
 
 export const DN_LOOP_LINE_SECTIONS = [
