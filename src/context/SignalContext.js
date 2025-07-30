@@ -13,7 +13,7 @@ export function SignalProvider({ children }) {
     // This looks for "Equ.:" followed by the signal name, then one of the ECR statuses,
     // and ensures the change is from 0 to 1. It handles extra spaces gracefully.
     const match = cleanLine.match(
-      /Equ\.:\s*([\w\d_]+?)\s*(RECR|HECR|HHECR|DECR)\s*Change:\s*0\s*>\s*1/i
+      /Equ\.:\s*([\w\d_]+?)\s*(RECR|HECR|HHECR|DECR)\s*Change:\s*0\s*[-]*>*\s*1/i
     );
 
     if (!match) {
