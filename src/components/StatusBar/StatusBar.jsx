@@ -4,6 +4,7 @@ import { TimeContext } from '../../context/TimeContext';
 import ClockControl from './ClockControl';
 import './StatusBar.css';
 import { parseLogFile } from '../../utils/logParser';
+import { parseAndStructureData } from '../../utils/excelParser';
 
 // PDF.js imports
 import * as pdfjsLib from 'pdfjs-dist';
@@ -26,7 +27,7 @@ const loadScript = (src) => {
 
 export default function StatusBar() {
   // Destructure all necessary values from TimeContext, correcting the typo from 'set' to 'setExcelData'
-  const { initialTime, currentTime, setInitialTime, setAllLogEntries, setExcelData } = useContext(TimeContext);
+  const { initialTime, currentTime, setInitialTime, setAllLogEntries, setRouteDatabase } = useContext(TimeContext);
   const liveTime = useTimer(); // this ticks every second
 
   // Define the missing state variables
@@ -107,21 +108,23 @@ export default function StatusBar() {
     setExcelFileName(file.name);
     
     try {
-      // Dynamically load the xlsx library from a CDN
       await loadScript('https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js');
       
       const reader = new FileReader();
       reader.onload = (event) => {
         try {
           const data = event.target.result;
-          // The XLSX object is now available on the window
           const workbook = window.XLSX.read(data, { type: 'array' });
-          const sheetName = workbook.SheetNames[0];
+          const sheetName = workbook.SheetNames.find(name => name.toLowerCase().includes('route control table'));
+          if (!sheetName) throw new Error("Could not find 'Route Control Table' sheet.");
+
           const worksheet = workbook.Sheets[sheetName];
           const jsonData = window.XLSX.utils.sheet_to_json(worksheet);
           
-          setExcelData(jsonData);
-          console.log('[StatusBar] Successfully parsed and set Excel data:', jsonData);
+          // Use the new parser to structure the data
+          const structuredData = parseAndStructureData(jsonData);
+          setRouteDatabase(structuredData);
+          console.log('[StatusBar] Successfully created and set route database.');
         } catch (err) {
           console.error('An error occurred during Excel file processing:', err);
           setParseError('Failed to parse Excel file: ' + err.message);
@@ -139,7 +142,7 @@ export default function StatusBar() {
       setParseError(err.message);
     }
     
-    e.target.value = ''; // Reset file input
+    e.target.value = '';
   };
 
   const formatTime = (date) => {
@@ -185,25 +188,15 @@ export default function StatusBar() {
         
       <div className="status-right flex items-center" style={{ marginLeft: '90px' }}>
         <div className="mr-4">
-        <label className="cursor-pointer" style={{ marginLeft: '90px' }}>
-            Upload Log
-            <input
-              type="file"
-              accept=".xps, .txt, .pdf"
-              onChange={handleUpload}
-              className="hidden"
-            />
+          <label className={`cursor-pointer upload-btn ${isParsing ? 'disabled' : ''}`}>
+            {isParsing ? 'Parsing...' : 'Upload Log'}
+            <input type="file" accept=".pdf, .txt, .xps" onChange={handleUpload} className="hidden" disabled={isParsing} />
           </label>
         </div>
         <div className="ml- 4"> {/* <-- This adds space before Excel upload */}
-          <label className="cursor-pointer" style={{ marginLeft: '90px' }}>
-            Upload Excel
-            <input
-              type="file"
-              accept=".xlsx, .xls"
-              onChange={handleExcelUpload}
-              className="hidden"
-            />
+          <label className="cursor-pointer upload-btn">
+            {excelFileName ? excelFileName.substring(0, 15) + '...' : 'Upload Excel'}
+            <input type="file" accept=".xlsx, .xls" onChange={handleExcelUpload} className="hidden" />
           </label>
         </div>
       </div>
