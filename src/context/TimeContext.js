@@ -10,8 +10,8 @@ export function TimeProvider({ children }) {
   const [sentIndex, setSentIndex] = useState(0);
   const [running, setRunning] = useState(true);
   
-  // New state to hold data from the uploaded Excel file
-  const [excelData, setExcelData] = useState(null);
+  // This will now hold the structured Map (our "database") from excelParser.js
+  const [routeDatabase, setRouteDatabase] = useState(null);
 
   // If initialTime changes (i.e. file upload), reset currentTime & sentIndex
   useEffect(() => {
@@ -26,7 +26,6 @@ export function TimeProvider({ children }) {
     if (!running || !currentTime) return;
 
     const id = setInterval(() => {
-      // Automatically pause the timer if the current time has passed the last log entry.
       if (allLogEntries.length > 0 && sentIndex >= allLogEntries.length) {
           console.log("⏹️ [TimeContext] End of logs reached. Pausing timer.");
           setRunning(false);
@@ -73,7 +72,7 @@ export function TimeProvider({ children }) {
       allLogEntries, setAllLogEntries,
       sentIndex, setSentIndex,
       running, start, pause, stop,
-      excelData, setExcelData // Expose Excel data and its setter
+      routeDatabase, setRouteDatabase // Expose the new database and its setter
     }}>
       {children}
     </TimeContext.Provider>
