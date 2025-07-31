@@ -1102,60 +1102,91 @@ const MainTrackLayout = () => {
         
         {/* SLANTING LINES - Using the new component */}
         <SlantingLine 
-          Upx={UP_MAIN_LINE_SECTIONS[3].x + (2.5/10) * (UP_MAIN_LINE_SECTIONS[4].x - UP_MAIN_LINE_SECTIONS[3].x)} 
-          Upy={upMainLineY} 
-          Dnx={upLoopLineStart + (6/10) * (UP_LOOP_LINE_SECTIONS[0].x - upLoopLineStart)} 
-          Dny={upLoopLineY} 
-          UpName="249B" 
+          pointId='249'
+          UpName="249B"
+          UpTrainMovement = "left"
           DnName="249A"
+          DnTrainMovement = "right"
+          upSectionArr={UP_MAIN_LINE_SECTIONS}
+          upSectionIdx={3}
+          upSectionRatio={1/4}
+          dnSectionArr={UP_LOOP_LINE_SECTIONS}
+          dnSectionIdx={upLoopLineStart}
+          dnSectionRatio={0.6}
+        />
+
+        <SlantingLine
+          pointId="203"
+          UpName="203B"
+          UpTrainMovement = "right"
+          DnName="203A"
+          DnTrainMovement = "left"
+          upSectionArr={UP_MAIN_LINE_SECTIONS}
+          upSectionIdx={5}
+          upSectionRatio={0.6}
+          dnSectionArr={UP_LOOP_LINE_SECTIONS}
+          dnSectionIdx={2}
+          dnSectionRatio={4/11}
         />
 
         <SlantingLine 
-          Upx={UP_MAIN_LINE_SECTIONS[5].x + (6/10) * (UP_MAIN_LINE_SECTIONS[6].x - UP_MAIN_LINE_SECTIONS[5].x)} 
-          Upy={upMainLineY} 
-          Dnx={UP_LOOP_LINE_SECTIONS[2].x + (4/11) * (UP_LOOP_LINE_SECTIONS[3].x - UP_LOOP_LINE_SECTIONS[2].x)} 
-          Dny={upLoopLineY} 
-          UpName="203B" 
-          DnName="203A" 
-        />
-
-        <SlantingLine 
-          Upx={DN_MAIN_LINE_SECTIONS[1].x + (8.5/10) * (DN_MAIN_LINE_SECTIONS[2].x - DN_MAIN_LINE_SECTIONS[1].x)} 
-          Upy={dnMainLineY} 
-          Dnx={UP_MAIN_LINE_SECTIONS[1].x + (4/10) * (UP_MAIN_LINE_SECTIONS[2].x - UP_MAIN_LINE_SECTIONS[1].x)} 
-          Dny={upMainLineY} 
+          pointId='298'
           UpName="298B" 
+          UpTrainMovement = "left"
           DnName="298A" 
+          DnTrainMovement = "right"
+          upSectionArr={DN_MAIN_LINE_SECTIONS}
+          upSectionIdx={1}
+          upSectionRatio={8.5/10}
+          dnSectionArr={UP_MAIN_LINE_SECTIONS}
+          dnSectionIdx={1}
+          dnSectionRatio={4/10}
         />
 
         <SlantingLine 
-          Upx={DN_MAIN_LINE_SECTIONS[6].x + (7/10) * (DN_MAIN_LINE_SECTIONS[7].x - DN_MAIN_LINE_SECTIONS[6].x)} 
-          Upy={dnMainLineY} 
-          Dnx={UP_MAIN_LINE_SECTIONS[6].x + (1.5/10) * (UP_MAIN_LINE_SECTIONS[7].x - UP_MAIN_LINE_SECTIONS[6].x)} 
-          Dny={upMainLineY} 
+          pointId='202'
           UpName="202A" 
-          DnName="202B" 
+          UpTrainMovement = "left"
+          DnName="202B"
+          DnTrainMovement = "right"
+          upSectionArr={DN_MAIN_LINE_SECTIONS}
+          upSectionIdx={6}
+          upSectionRatio={7/10}
+          dnSectionArr={UP_MAIN_LINE_SECTIONS}
+          dnSectionIdx={6}
+          dnSectionRatio={1.5/10}
         />
 
         <SlantingLine 
-          Upx={DN_LOOP_LINE_SECTIONS[0].x + (8/10) * (DN_LOOP_LINE_SECTIONS[1].x - DN_LOOP_LINE_SECTIONS[0].x)} 
-          Upy={dnLoopLineY} 
-          Dnx={DN_MAIN_LINE_SECTIONS[2].x + (4.5/10) * (DN_MAIN_LINE_SECTIONS[3].x - DN_MAIN_LINE_SECTIONS[2].x)} 
-          Dny={dnMainLineY} 
+          pointId='296'
           UpName="296A" 
-          DnName="296B" 
+          UpTrainMovement = "right"
+          DnName="296B"
+          DnTrainMovement = "left"
+          upSectionArr={DN_LOOP_LINE_SECTIONS}
+          upSectionIdx={0}
+          upSectionRatio={8/10}
+          dnSectionArr={DN_MAIN_LINE_SECTIONS}
+          dnSectionIdx={2}
+          dnSectionRatio={4.5/10}
         />
 
         <SlantingLine 
-          Upx={DN_LOOP_LINE_SECTIONS[2].x + (5/10) * (dnLoopLineEnd - DN_LOOP_LINE_SECTIONS[2].x)} 
-          Upy={dnLoopLineY} 
-          Dnx={DN_MAIN_LINE_SECTIONS[4].x + (6.5/10) * (DN_MAIN_LINE_SECTIONS[5].x - DN_MAIN_LINE_SECTIONS[4].x)} 
-          Dny={dnMainLineY} 
+          pointId='242'
           UpName="242A" 
-          DnName="242B" 
+          UpTrainMovement = "left"
+          DnName="242B"
+          DnTrainMovement = "right"
+          upSectionArr={DN_LOOP_LINE_SECTIONS}
+          upSectionIdx={2}
+          upSectionRatio={5/10}
+          dnSectionArr={DN_MAIN_LINE_SECTIONS}
+          dnSectionIdx={4}
+          dnSectionRatio={6.5/10}
         />
 
         <SlantingLineWOper
+          pointId='247'
           Upx={UP_LOOP_LINE_SECTIONS[0].x + (4/10) * (UP_LOOP_LINE_SECTIONS[1].x - UP_LOOP_LINE_SECTIONS[0].x)} 
           Upy={upLoopLineY} 
           Dnx={yardLineStart} 

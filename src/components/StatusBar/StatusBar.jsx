@@ -86,7 +86,7 @@ export default function StatusBar() {
 
         const { initialTime, allLogEntries } = parseLogFile(fullText);
         console.log('⏱ Parsed initialTime =', initialTime);
-        console.log('First log entry:', allLogEntries[0]);
+        console.log('Log entries:', allLogEntries);
 
         setInitialTime(initialTime);
         setAllLogEntries(allLogEntries);

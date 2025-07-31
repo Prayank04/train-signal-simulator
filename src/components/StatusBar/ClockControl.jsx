@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import { TimeContext } from '../../context/TimeContext';
 import { useSignalContext } from '../../context/SignalContext';
-import { useTrackContext } from '../../context/TrackContext'; // Changed from useRouteContext
+import { useTrackContext } from '../../context/TrackContext';
+import { usePointContext } from '../../context/PointContext';
 
 export default function ClockControl() {
   const {
@@ -16,42 +17,49 @@ export default function ClockControl() {
     running
   } = useContext(TimeContext);
 
-  // Get all necessary functions from useTrackContext now
+  // Get all necessary processing and reset functions from their respective contexts.
   const { processTrackLine, parseRouteLine, resetTracks } = useTrackContext();
   const { processLogLine, resetSignals } = useSignalContext();
+  const { processPointLine, resetPoints } = usePointContext(); // Get functions from PointContext
   
   const didReset = useRef(false);
 
-  // Reset logic once
+  // This effect performs a one-time reset when a new file is loaded (indicated by a change in initialTime).
   useEffect(() => {
     if (initialTime && !didReset.current) {
-      console.log("🔄 Initial Time detected. Resetting once.");
+      console.log("🔄 Initial Time detected. Resetting all states once.");
       stop();
       resetSignals();
       resetTracks();
+      resetPoints(); // Also reset points
       didReset.current = true;
     }
-  }, [initialTime, stop, resetSignals, resetTracks]);
+  }, [initialTime, stop, resetSignals, resetTracks, resetPoints]);
 
-  // Clear reset flag when new file uploaded
+  // This effect clears the reset flag when a new file is uploaded, allowing the reset logic to run again.
   useEffect(() => {
     didReset.current = false;
   }, [initialTime]);
 
-  // Log processor
+  // This effect is the core log processor for the simulation.
   useEffect(() => {
     if (!running || !currentTime) return;
 
-     console.log(
-    `🔍 [ClockControl] checking logs: currentTime=${currentTime.toLocaleTimeString('en-GB')}, sentIndex=${sentIndex}, totalEntries=${allLogEntries.length}`
+    console.log(
+      `🔍 [ClockControl] checking logs: currentTime=${currentTime.toLocaleTimeString('en-GB')}, sentIndex=${sentIndex}, totalEntries=${allLogEntries.length}`
     );
 
     let idx = sentIndex;
     while (idx < allLogEntries.length && allLogEntries[idx].time <= currentTime) {
-      console.log(`✅ [ClockControl] Processing entry ${idx}:`, allLogEntries[idx].raw);
-      parseRouteLine(allLogEntries[idx].raw); // This now comes from TrackContext
-      processLogLine(allLogEntries[idx].raw);
-      processTrackLine(allLogEntries[idx].raw);
+      const logEntry = allLogEntries[idx];
+      console.log(`✅ [ClockControl] Processing entry ${idx}:`, logEntry.raw);
+      
+      // Send the raw log line to each context for processing.
+      parseRouteLine(logEntry.raw);
+      processLogLine(logEntry.raw);
+      processTrackLine(logEntry.raw);
+      processPointLine(logEntry.raw); // Send to PointContext
+      
       idx++;
     }
 
@@ -59,44 +67,44 @@ export default function ClockControl() {
       console.log(`➡️ [ClockControl] advancing sentIndex to ${idx}`);
       setSentIndex(idx);
     }
-  }, [currentTime, running, allLogEntries, sentIndex, processLogLine, processTrackLine, parseRouteLine, setSentIndex]);
+  }, [currentTime, running, allLogEntries, sentIndex, setSentIndex, processLogLine, processTrackLine, parseRouteLine, processPointLine]);
 
   return (
-    <div className="flex space-x-4">
+    <div className="flex items-center space-x-4">
       <button
         onClick={() => {
           if (!initialTime) {
-            alert('Upload a file first');
+            alert('Please upload a log file first.');
             return;
           }
           console.log('▶️ [ClockControl] START clicked');
           start();
         }}
         disabled={!initialTime || running}
-        className="px-4 py-2 bg-green-500 rounded"
+        className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-md disabled:bg-gray-500"
       >
         START
       </button>
       <button
         onClick={pause}
         disabled={!running}
-        className="px-4 py-2 bg-yellow-500 rounded"
+        className="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 rounded-md disabled:bg-gray-500"
       >
         PAUSE
       </button>
       <button
         onClick={() => {
-          stop();                  // Stops the ticking
-          resetSignals();          // Clears signal colors
-          resetTracks();           // Clears track colors
-          console.log("🛑 STOP clicked – resetting to initial state like file just uploaded");
+          console.log("🛑 STOP clicked – resetting all states.");
+          stop();
+          resetSignals();
+          resetTracks();
+          resetPoints(); // Ensure points are reset on STOP
         }}
         disabled={!initialTime}
-        className="px-4 py-2 bg-red-500 rounded"
-        >
-        STOP
+        className="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-md"
+      >
+        RESET
       </button>
-
     </div>
   );
 }

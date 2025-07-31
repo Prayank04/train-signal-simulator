@@ -12,6 +12,7 @@ import RightBottomTrackLayout from './components/TrackLayout/RightBottomTrackLay
 import './App.css';
 import './styles/globals.css';
 import { RouteProvider } from './context/RouteContext';
+import { PointProvider } from './context/PointContext';
 
 function App() {
   return (
@@ -19,32 +20,34 @@ function App() {
       <SignalProvider>
         <RouteProvider>
           <TrackProvider>
-            <div className="flex flex-col h-screen railway-hmi">
-              <StatusBar />
-              <div className="flex flex-1 main-container">
-                <aside className="w-1/4 bg-gray-100">
-                  <LeftControlPanel />
-                </aside>
-                <main className="flex-1 bg-white">
-                  {/* Navigation Header */}
-                  <div className="navigation-header">
-                    <div className="nav-arrows">← UP/DOWN →</div>
-                    <div className="nav-stations">
-                      ← JNPT &nbsp;&nbsp;&nbsp; NEW CHANDAWAL &nbsp;&nbsp;&nbsp; DADRI →
+            <PointProvider>
+              <div className="flex flex-col h-screen railway-hmi">
+                <StatusBar />
+                <div className="flex flex-1 main-container">
+                  <aside className="w-1/4 bg-gray-100">
+                    <LeftControlPanel />
+                  </aside>
+                  <main className="flex-1 bg-white">
+                    {/* Navigation Header */}
+                    <div className="navigation-header">
+                      <div className="nav-arrows">← UP/DOWN →</div>
+                      <div className="nav-stations">
+                        ← JNPT &nbsp;&nbsp;&nbsp; NEW CHANDAWAL &nbsp;&nbsp;&nbsp; DADRI →
+                      </div>
                     </div>
-                  </div>
-                  {/* Track Layouts */}
-                  <div className="track-container">
-                    <MainTrackLayout />
-                    <LeftBottomTrackLayout />
-                    <CommonControlPanel/>
-                  </div>
-                </main>
-                <aside className="w-1/4 bg-gray-100">
-                  <RightControlPanel />
-                </aside>
+                    {/* Track Layouts */}
+                    <div className="track-container">
+                      <MainTrackLayout />
+                      <LeftBottomTrackLayout />
+                      <CommonControlPanel/>
+                    </div>
+                  </main>
+                  <aside className="w-1/4 bg-gray-100">
+                    <RightControlPanel />
+                  </aside>
+                </div>
               </div>
-            </div>
+            </PointProvider>
           </TrackProvider>
         </RouteProvider>
       </SignalProvider>
