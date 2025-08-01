@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import { TRACK_LAYOUT_CONSTANTS, LEFT_BOTTOM_LINE1_SECTIONS, LEFT_BOTTOM_LINE2_SECTIONS, LEFT_BOTTOM_LINE3_SECTIONS, LEFT_BOTTOM_LINE4_SECTIONS, RIGHT_BOTTOM_LINE1_SECTIONS, RIGHT_BOTTOM_LINE2_SECTIONS, RIGHT_BOTTOM_LINE3_SECTIONS, RIGHT_BOTTOM_LINE4_SECTIONS} from './/../../utils/constants';
+import { TRACK_LAYOUT_CONSTANTS, LEFT_BOTTOM_LINE1_SECTIONS, LEFT_BOTTOM_LINE2_SECTIONS, LEFT_BOTTOM_LINE3_SECTIONS, LEFT_BOTTOM_LINE4_SECTIONS, RIGHT_BOTTOM_LINE1_SECTIONS, RIGHT_BOTTOM_LINE2_SECTIONS, RIGHT_BOTTOM_LINE3_SECTIONS, RIGHT_BOTTOM_LINE4_SECTIONS} from '../../utils/constants';
 import { TrackContext, statusColors } from '../../context/TrackContext';
 import { trackStatusToColor } from '../../utils/constants';
 import VerticalSections from './MainTrackLayout/VerticalSections';
@@ -63,7 +63,7 @@ const Rightline4UPSignals = [
   } = TRACK_LAYOUT_CONSTANTS;
 
 
-const LeftBottomTrackLayout = () => {
+const BottomTrackLayout = () => {
   const signalOffsetY = 20;
 
 
@@ -72,11 +72,10 @@ const { trackStates } = useContext(TrackContext);
     return statusColors[trackStates[trackId]] || "white";
   };
 
-
   
   return (
     <div className="bottom-track-layout" style={{ marginTop: '-100px'}}>
-      <svg width="1380" height="180" style={{ backgroundColor: "#333333" }}>
+      <svg width="1380" height="250" style={{ backgroundColor: "#333333" }}>
         
 
         {/* DN and UP direction labels */}
@@ -85,6 +84,123 @@ const { trackStates } = useContext(TrackContext);
 
         <text x= {rightbot_lineEnd - 15} y={bottom_line1_Y - 15} fill="yellow" fontSize="10">DN</text>
         <text x={rightbot_lineEnd - 15} y={bottom_line4_Y + 15} fill="yellow" fontSize="10">UP</text>
+
+
+        {/* dashed guide‐line + centered label */}
+        <g>
+          {/* the dashed line */}
+          <line
+            x1={leftbot_lineStart}
+            y1={bottom_line1_Y - 25}
+            x2={leftbot_lineEnd}
+            y2={bottom_line1_Y - 25}
+            stroke="white"
+            strokeDasharray="5,5"
+            strokeWidth={1}
+          />
+
+          {/* the text label, centered above the line */}
+          <text
+            x={(leftbot_lineStart + leftbot_lineEnd) / 2}
+            y={bottom_line1_Y - 8}            // nudge the text a bit above the dashes
+            fill="white"
+            fontSize="10"
+            textAnchor="middle"
+            dominantBaseline="middle"
+          >
+            ALH-058
+          </text>
+        </g>
+
+        {/* ← left‐side bracket with “A” label */}
+        <g stroke="white" strokeWidth={2}>
+          {/* top horizontal */}
+          <line 
+            x1={leftbot_lineEnd + 12} 
+            y1={bottom_line1_Y - 10} 
+            x2={leftbot_lineEnd} 
+            y2={bottom_line1_Y - 10} 
+          />
+          {/* bottom horizontal */}
+          <line 
+            x1={leftbot_lineEnd + 12} 
+            y1={bottom_line4_Y + 10} 
+            x2={leftbot_lineEnd} 
+            y2={bottom_line4_Y + 10} 
+          />
+          {/* vertical connector */}
+          <line 
+            x1={leftbot_lineEnd + 12} 
+            y1={bottom_line1_Y - 10} 
+            x2={leftbot_lineEnd + 12} 
+            y2={bottom_line4_Y + 10} 
+          />
+          {/* line towards A */}
+          <line 
+            x1={leftbot_lineEnd + 12} 
+            y1={(bottom_line1_Y + bottom_line4_Y) / 2 - 5 } 
+            x2={leftbot_lineEnd + 18} 
+            y2={((bottom_line1_Y + bottom_line4_Y) / 2) -5} 
+          />
+          {/* the “A” */}
+          <text 
+            x={leftbot_lineEnd + 25} 
+            y={(bottom_line1_Y + bottom_line4_Y) / 2} 
+            fill="white" 
+            stroke = 'none'
+            fontSize="12" 
+            textAnchor="middle"
+            fontFamily="Arial, sans-serif"
+          >
+            A
+          </text>
+        </g>
+
+         {/* ← right‐side bracket with “B” label */}
+        <g stroke="white" strokeWidth={2}>
+          {/* top horizontal */}
+          <line 
+            x1={rightbot_lineStart - 12} 
+            y1={bottom_line1_Y - 10} 
+            x2={rightbot_lineStart} 
+            y2={bottom_line1_Y - 10} 
+          />
+          {/* bottom horizontal */}
+          <line 
+            x1={rightbot_lineStart - 12} 
+            y1={bottom_line4_Y + 10} 
+            x2={rightbot_lineStart} 
+            y2={bottom_line4_Y + 10} 
+          />
+          {/* vertical connector */}
+          <line 
+            x1={rightbot_lineStart - 12} 
+            y1={bottom_line1_Y - 10} 
+            x2={rightbot_lineStart - 12} 
+            y2={bottom_line4_Y + 10} 
+          />
+          {/* line towards B */}
+          <line 
+            x1={rightbot_lineStart - 12} 
+            y1={(bottom_line1_Y + bottom_line4_Y) / 2 - 5 } 
+            x2={rightbot_lineStart - 20} 
+            y2={((bottom_line1_Y + bottom_line4_Y) / 2) -5} 
+          />
+          {/* the “A” */}
+          <text 
+            x={rightbot_lineStart - 26} 
+            y={(bottom_line1_Y + bottom_line4_Y) / 2} 
+            fill="white" 
+            stroke = 'none'
+            fontSize="12" 
+            textAnchor="middle"
+            fontFamily="Arial, sans-serif"
+          >
+            B
+          </text>
+        </g>
+
+        
 
         {/* DN Signals for Line 1 */}
         {Leftline1DNSignals.map((signal) => {
@@ -758,4 +874,4 @@ const { trackStates } = useContext(TrackContext);
   );
 };
 
-export default LeftBottomTrackLayout;
+export default BottomTrackLayout;

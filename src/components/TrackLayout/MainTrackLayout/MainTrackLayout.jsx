@@ -36,7 +36,7 @@ import TrackSection from './TrackSection';
 import Circle from './circles'; 
 import SlantingLine from './SlantingLine';
 import SlantingLineWOper from './SlantingLineWOper';
-import TrackSectionWithBreak from "./TrackBreaks"
+import BreakOverlay from "./BreakOverlay"
 
 
 
@@ -166,6 +166,95 @@ const MainTrackLayout = () => {
             [upLoopLineEnd, upLoopLineY + 8, upLoopLineEnd + 5],
           ]}
         />
+
+         {/* ← left‐side bracket with “A” label */}
+        <g stroke="white" strokeWidth={2}>
+          {/* top horizontal */}
+          <line 
+            x1={mainlineStart - 9} 
+            y1={dnMainLineY - 10} 
+            x2={mainlineStart + 3} 
+            y2={dnMainLineY - 10} 
+          />
+          {/* bottom horizontal */}
+          <line 
+            x1={mainlineStart - 9} 
+            y1={upMainLineY + 13} 
+            x2={mainlineStart + 3} 
+            y2={upMainLineY + 13} 
+          />
+          {/* vertical connector */}
+          <line 
+            x1={mainlineStart - 9} 
+            y1={dnMainLineY - 10} 
+            x2={mainlineStart - 9} 
+            y2={upMainLineY + 13} 
+          />
+          {/* line towards A */}
+          <line 
+            x1={mainlineStart - 9} 
+            y1={(dnMainLineY + upMainLineY) / 2 - 5 } 
+            x2={mainlineStart - 14} 
+            y2={((dnMainLineY + upMainLineY) / 2) -5} 
+          />
+          {/* the “A” */}
+          <text 
+            x={mainlineStart - 20} 
+            y={(dnMainLineY + upMainLineY) / 2} 
+            fill="white" 
+            stroke = 'none'
+            fontSize="12" 
+            textAnchor="middle"
+            fontFamily="Arial, sans-serif"
+          >
+            A
+          </text>
+        </g>
+
+         {/* ← right‐side bracket with “B” label */}
+        <g stroke="white" strokeWidth={2}>
+          {/* top horizontal */}
+          <line 
+            x1={mainlineEnd - 5} 
+            y1={dnMainLineY - 10} 
+            x2={mainlineEnd + 7} 
+            y2={dnMainLineY - 10} 
+          />
+          {/* bottom horizontal */}
+          <line 
+            x1={mainlineEnd - 5} 
+            y1={upMainLineY + 13} 
+            x2={mainlineEnd + 7} 
+            y2={upMainLineY + 13} 
+          />
+          {/* vertical connector */}
+          <line 
+            x1={mainlineEnd + 7} 
+            y1={dnMainLineY - 10} 
+            x2={mainlineEnd + 7} 
+            y2={upMainLineY + 13} 
+          />
+          {/* line towards A */}
+          <line 
+            x1={mainlineEnd + 7} 
+            y1={(dnMainLineY + upMainLineY) / 2 - 5 } 
+            x2={mainlineEnd + 12} 
+            y2={((dnMainLineY + upMainLineY) / 2) -5} 
+          />
+          {/* the “B” */}
+          <text 
+            x={mainlineEnd + 18} 
+            y={(dnMainLineY + upMainLineY) / 2} 
+            fill="white" 
+            stroke = 'none'
+            fontSize="12" 
+            textAnchor="middle"
+            fontFamily="Arial, sans-serif"
+          >
+            B
+          </text>
+        </g>
+
 {/* EXTRA TRACK BELOW UP LOOP LINE */}
 <ExtraLine
   x1={yardLineStart}
@@ -370,21 +459,34 @@ const MainTrackLayout = () => {
         <ShuntUp startX={DN_LOOP_LINE_SECTIONS[0].x - (0.1) * (DN_LOOP_LINE_SECTIONS[1].x- DN_LOOP_LINE_SECTIONS[0].x)} label="SH196" lineY={dnLoopLineY -3} />
         
         {/* 4. 296AXT */}
-        <TrackSectionWithBreak
-          sections={DN_LOOP_LINE_SECTIONS}
-          TSName="296AXT"
-          lineY={dnLoopLineY}
-          x1={0}
-          x2={1}
-          ratio={0.54}
-          textYOffset={-5}
-          getTrackColor={getTrackColor}
-          breakBetween={{
-          xStart: DN_LOOP_LINE_SECTIONS[0].x,
-          xEnd: DN_LOOP_LINE_SECTIONS[1].x,
-          ratio: 0.3,
-  }}
-        />
+        <g>
+          {/* 1) draw the base track + label exactly as before */}
+          <TrackSection
+            sections={DN_LOOP_LINE_SECTIONS}
+            TSName="296AXT"
+            lineY={dnLoopLineY}
+            x1={0}
+            x2={1}
+            ratio={0.54}
+            textYOffset={-5}
+            getTrackColor={getTrackColor}
+            fontSize={9}        // or whatever you were using
+            fill="#00bfff"      // same as before
+          />
+
+          {/* 2) overlay the “break” graphics */}
+          <BreakOverlay
+            breakBetween={{
+              xStart: DN_LOOP_LINE_SECTIONS[0].x,
+              xEnd:   DN_LOOP_LINE_SECTIONS[1].x,
+              ratio:  0.3,
+            }}
+            lineY={dnLoopLineY}
+            direction="up"             // or "down", as needed
+            breakLengthRatio={0.1}    // matches your old default
+            slantedLineRatio={0.5}       // as before
+          />
+        </g>
 
         
         {/* 6. SH193 - Mirror of SH140 */}
@@ -920,7 +1022,7 @@ const MainTrackLayout = () => {
         x1={mainlineStart}
         x2={0}
         getTrackColor={getTrackColor}
-        ratio = {0.05}
+        ratio = {0.1}
         fontSize={9}
         textYOffset={10}
       />
@@ -965,25 +1067,36 @@ const MainTrackLayout = () => {
         <ShuntDown startX={UP_LOOP_LINE_SECTIONS[2].x + (0.92)* (UP_LOOP_LINE_SECTIONS[3].x- UP_LOOP_LINE_SECTIONS[2].x)} label="SH123" lineY={upLoopLineY} />
         
         
-        {/* 6. 203AXT */}
-        <TrackSectionWithBreak
+        
+      {/* 6. 203AXT */}
+      <g>
+        {/* 1) the base track + label */}
+        <TrackSection
           sections={UP_LOOP_LINE_SECTIONS}
           TSName="203AXT"
           lineY={upLoopLineY}
           x1={2}
           x2={3}
-          getTrackColor={getTrackColor}
-          ratio = {0.15}
-          fontSize={9}
+          ratio={0.15}
           textYOffset={10}
-          direction = "down"
-          slantedLineRatio = {0.7}
-          breakBetween={{
-          xStart: UP_LOOP_LINE_SECTIONS[2].x,
-          xEnd: UP_LOOP_LINE_SECTIONS[3].x,
-          ratio: 0.7,
-        }}
+          getTrackColor={getTrackColor}
+          fontSize={9}
+          fill="#00bfff"
         />
+
+        {/* 2) just the break overlay (no scaling for now) */}
+        <BreakOverlay
+          breakBetween={{
+            xStart: UP_LOOP_LINE_SECTIONS[2].x,
+            xEnd:   UP_LOOP_LINE_SECTIONS[3].x,
+            ratio:  0.7,
+          }}
+          lineY={upLoopLineY}
+          direction="down"
+          slantedLineRatio={0.7}
+          /* breakLengthRatio, liftHeight, etc. will default to your existing values */
+        />
+      </g>
         
         {/* 7. SH124 Signal - EXACTLY as your original function */}
         <ShuntUp startX={UP_LOOP_LINE_SECTIONS[1].x + (0.9)* (UP_LOOP_LINE_SECTIONS[2].x- UP_LOOP_LINE_SECTIONS[1].x)} label="SH124" lineY={upLoopLineY} />
@@ -1068,23 +1181,34 @@ const MainTrackLayout = () => {
 
         {/* Yard line */}
 
-        {/* 6. 1st Sec */}
-        <TrackSectionWithBreak
-          sections={YARD_LINES_SECTIONS}
-          TSName=""
-          lineY={yardLine}
-          x1={yardLineStart}
-          x2={0}
-          getTrackColor={getTrackColor}
-          fontSize={9}
-          textYOffset={10}
-          direction = "down"
-          breakBetween={{
-          xStart: yardLineStart,
-          xEnd: YARD_LINES_SECTIONS[0].x,
-          ratio: 0.02,
-        }}
-        />
+        {/* YARD line with a downward break */}
+        <g>
+          {/* 1) draw the base track */}
+          <TrackSection
+            sections={YARD_LINES_SECTIONS}
+            TSName=""
+            lineY={yardLine}
+            x1={yardLineStart}
+            x2={0}
+            // ratio defaults to 0.5 if you omit it
+            textYOffset={10}
+            getTrackColor={getTrackColor}
+            fontSize={9}
+            fill="#00bfff"
+          />
+
+          {/* 2) overlay the downward‐slanted break */}
+          <BreakOverlay
+            breakBetween={{
+              xStart: yardLineStart,
+              xEnd:   YARD_LINES_SECTIONS[0].x,
+              ratio:  0.02
+            }}
+            lineY={yardLine}
+            direction="down"
+            // breakLengthRatio, slantedLineRatio, liftHeight etc. will use your defaults
+          />
+        </g>
 
 
         <ShuntDown startX={yardLineStart + (3.5/10) * (yardLineEnd - yardLineStart)} label="SH131" lineY={yardLine} /> 

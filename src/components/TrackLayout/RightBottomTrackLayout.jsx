@@ -48,35 +48,60 @@ const RightBottomTrackLayout = () => {
         marginTop: '-185px',    // Align vertically with left bottom track
         marginLeft: '1040px',   // Position to the right
         position: 'absolute',
-        border: '1px solid red',
+        border: '5px solid red',
       }}
     >
-      <svg width="320" height="180" style={{ backgroundColor: "#333333" }}>
+      <svg width="400" height="250" style={{ backgroundColor: "#333333",  border: '5px solid red' }}>
 
 
-        {/* Bright dot at rightbot_lineStart (mapped to x=0) */}
-<circle
-  cx={0}
-  cy={10}
-  r={4}
-  fill="lime"
->
-  <title>rightbot_lineStart</title>
-</circle>
-
-{/* Bright dot at rightbot_lineEnd (mapped to end - start) */}
-<circle
-  cx={rightbot_lineEnd - rightbot_lineStart}
-  cy={10}
-  r={4}
-  fill="red"
->
-  <title>rightbot_lineEnd</title>
-</circle>
 
         {/* DN and UP direction labels */}
         <text x= {rightbot_lineEnd - 50} y={bottom_line1_Y - 15} fill="yellow" fontSize="10">DN</text>
         <text x={rightbot_lineEnd - 50} y={bottom_line4_Y + 15} fill="yellow" fontSize="10">UP</text>
+
+         {/* ← right‐side bracket with “B” label */}
+        <g stroke="white" strokeWidth={2}>
+          {/* top horizontal */}
+          <line 
+            x1={rightbot_lineStart - 12} 
+            y1={bottom_line1_Y - 10} 
+            x2={rightbot_lineStart} 
+            y2={bottom_line1_Y - 10} 
+          />
+          {/* bottom horizontal */}
+          <line 
+            x1={rightbot_lineStart + 12} 
+            y1={bottom_line4_Y + 10} 
+            x2={rightbot_lineStart} 
+            y2={bottom_line4_Y + 10} 
+          />
+          {/* vertical connector */}
+          <line 
+            x1={rightbot_lineEnd + 12} 
+            y1={bottom_line1_Y - 10} 
+            x2={rightbot_lineEnd + 12} 
+            y2={bottom_line4_Y + 10} 
+          />
+          {/* line towards B */}
+          <line 
+            x1={rightbot_lineEnd + 12} 
+            y1={(bottom_line1_Y + bottom_line4_Y) / 2 - 5 } 
+            x2={rightbot_lineEnd + 18} 
+            y2={((bottom_line1_Y + bottom_line4_Y) / 2) -5} 
+          />
+          {/* the “A” */}
+          <text 
+            x={rightbot_lineEnd + 25} 
+            y={(bottom_line1_Y + bottom_line4_Y) / 2} 
+            fill="white" 
+            stroke = 'none'
+            fontSize="12" 
+            textAnchor="middle"
+            fontFamily="Arial, sans-serif"
+          >
+            A
+          </text>
+        </g>
 
         {/* Four horizontal track lines 
         <line x1={-30} y1={lineY1} x2={220} y2={lineY1} stroke="white" strokeWidth="0" />

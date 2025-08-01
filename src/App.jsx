@@ -7,7 +7,7 @@ import LeftControlPanel from './components/ControlPanels/LeftControlPanel';
 import RightControlPanel from './components/ControlPanels/RightControlPanel';
 import CommonControlPanel from './components/ControlPanels/CommonControlPanel';
 import MainTrackLayout from './components/TrackLayout/MainTrackLayout/MainTrackLayout';
-import LeftBottomTrackLayout from './components/TrackLayout/LeftBottomTrackLayout';
+import BottomTrackLayout from './components/TrackLayout/BottomTrackLayout';
 import RightBottomTrackLayout from './components/TrackLayout/RightBottomTrackLayout';
 import './App.css';
 import './styles/globals.css';
@@ -38,7 +38,7 @@ function App() {
                     {/* Track Layouts */}
                     <div className="track-container">
                       <MainTrackLayout />
-                      <LeftBottomTrackLayout />
+                      <BottomTrackLayout />
                       <CommonControlPanel/>
                     </div>
                   </main>
