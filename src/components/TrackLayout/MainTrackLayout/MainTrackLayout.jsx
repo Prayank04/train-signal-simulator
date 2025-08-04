@@ -459,7 +459,6 @@ const MainTrackLayout = () => {
         <ShuntUp startX={DN_LOOP_LINE_SECTIONS[0].x - (0.1) * (DN_LOOP_LINE_SECTIONS[1].x- DN_LOOP_LINE_SECTIONS[0].x)} label="SH196" lineY={dnLoopLineY -3} />
         
         {/* 4. 296AXT */}
-        <g>
           {/* 1) draw the base track + label exactly as before */}
           <TrackSection
             sections={DN_LOOP_LINE_SECTIONS}
@@ -474,20 +473,7 @@ const MainTrackLayout = () => {
             fill="#00bfff"      // same as before
           />
 
-          {/* 2) overlay the “break” graphics */}
-          <BreakOverlay
-            breakBetween={{
-              xStart: DN_LOOP_LINE_SECTIONS[0].x,
-              xEnd:   DN_LOOP_LINE_SECTIONS[1].x,
-              ratio:  0.3,
-            }}
-            lineY={dnLoopLineY}
-            direction="up"             // or "down", as needed
-            breakLengthRatio={0.1}    // matches your old default
-            slantedLineRatio={0.5}       // as before
-          />
-        </g>
-
+          
         
         {/* 6. SH193 - Mirror of SH140 */}
         <ShuntDown startX={DN_LOOP_LINE_SECTIONS[1].x - (0.065) * (DN_LOOP_LINE_SECTIONS[2].x- DN_LOOP_LINE_SECTIONS[1].x)} label="SH193" lineY={dnLoopLineY} />
@@ -1069,7 +1055,6 @@ const MainTrackLayout = () => {
         
         
       {/* 6. 203AXT */}
-      <g>
         {/* 1) the base track + label */}
         <TrackSection
           sections={UP_LOOP_LINE_SECTIONS}
@@ -1083,20 +1068,7 @@ const MainTrackLayout = () => {
           fontSize={9}
           fill="#00bfff"
         />
-
-        {/* 2) just the break overlay (no scaling for now) */}
-        <BreakOverlay
-          breakBetween={{
-            xStart: UP_LOOP_LINE_SECTIONS[2].x,
-            xEnd:   UP_LOOP_LINE_SECTIONS[3].x,
-            ratio:  0.7,
-          }}
-          lineY={upLoopLineY}
-          direction="down"
-          slantedLineRatio={0.7}
-          /* breakLengthRatio, liftHeight, etc. will default to your existing values */
-        />
-      </g>
+        
         
         {/* 7. SH124 Signal - EXACTLY as your original function */}
         <ShuntUp startX={UP_LOOP_LINE_SECTIONS[1].x + (0.9)* (UP_LOOP_LINE_SECTIONS[2].x- UP_LOOP_LINE_SECTIONS[1].x)} label="SH124" lineY={upLoopLineY} />
@@ -1182,7 +1154,6 @@ const MainTrackLayout = () => {
         {/* Yard line */}
 
         {/* YARD line with a downward break */}
-        <g>
           {/* 1) draw the base track */}
           <TrackSection
             sections={YARD_LINES_SECTIONS}
@@ -1197,18 +1168,6 @@ const MainTrackLayout = () => {
             fill="#00bfff"
           />
 
-          {/* 2) overlay the downward‐slanted break */}
-          <BreakOverlay
-            breakBetween={{
-              xStart: yardLineStart,
-              xEnd:   YARD_LINES_SECTIONS[0].x,
-              ratio:  0.02
-            }}
-            lineY={yardLine}
-            direction="down"
-            // breakLengthRatio, slantedLineRatio, liftHeight etc. will use your defaults
-          />
-        </g>
 
 
         <ShuntDown startX={yardLineStart + (3.5/10) * (yardLineEnd - yardLineStart)} label="SH131" lineY={yardLine} /> 
@@ -1319,10 +1278,6 @@ const MainTrackLayout = () => {
           DnName="247B"
         />
 
-        
-
-
-
         <Triangles
           dnMainLineY={dnMainLineY}
           dnLoopLineY={dnLoopLineY}
@@ -1330,6 +1285,47 @@ const MainTrackLayout = () => {
           upLoopLineY={upLoopLineY}
           yardLine={yardLine}
         />
+
+        {/* 296AXT break */}
+        {/* 2) overlay the “break” graphics */}
+          <BreakOverlay
+            breakBetween={{
+              xStart: DN_LOOP_LINE_SECTIONS[0].x,
+              xEnd:   DN_LOOP_LINE_SECTIONS[1].x,
+              ratio:  0.3,
+            }}
+            lineY={dnLoopLineY}
+            direction="up"             // or "down", as needed
+            breakLengthRatio={0.1}    // matches your old default
+            slantedLineRatio={0.5}       // as before
+          />
+
+          {/* yard line break */}
+          {/* 2) overlay the downward‐slanted break */}
+          <BreakOverlay
+            breakBetween={{
+              xStart: yardLineStart,
+              xEnd:   YARD_LINES_SECTIONS[0].x,
+              ratio:  0.02
+            }}
+            lineY={yardLine}
+            direction="down"
+            // breakLengthRatio, slantedLineRatio, liftHeight etc. will use your defaults
+          />
+
+          {/* 203AXT break */}
+          <BreakOverlay
+          breakBetween={{
+            xStart: UP_LOOP_LINE_SECTIONS[2].x,
+            xEnd:   UP_LOOP_LINE_SECTIONS[3].x,
+            ratio:  0.7,
+          }}
+          lineY={upLoopLineY}
+          direction="down"
+          slantedLineRatio={0.7}
+          /* breakLengthRatio, liftHeight, etc. will default to your existing values */
+        />
+          
 
         {/* Vertical section markers for UP MAIN LINE */}
         <VerticalSections
