@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState, useCallback, useRef } from 'react';
+import React, { useContext } from 'react';
 import { TrackContext, statusColors } from '../../../context/TrackContext';
-import { trackStatusToColor } from '../../../utils/constants';
 import VerticalSections from './VerticalSections';
 import {
   TRACK_LAYOUT_CONSTANTS,
@@ -31,7 +30,7 @@ import {
     DnLoopLineSignal
 } from './signals';
 import Triangles from './Triangles';
-import { MainLine, LoopLine, ExtraLine, XtLine, CxtLine ,AxtLine, TwoxtLine}  from './Lines';
+import { MainLine, LoopLine, ExtraLine }  from './Lines';
 import TrackSection from './TrackSection';
 import Circle from './circles'; 
 import SlantingLine from './SlantingLine';
@@ -41,14 +40,6 @@ import BreakOverlay from "./BreakOverlay"
 
 
 const {
-  marginX,
-  spacing,
-  circleRadius,
-  dnLoopLineY,
-  dnMainLineY,
-  upMainLineY,
-  upLoopLineY,
-  signalOffsetY,
   mainlineStart,
   mainlineEnd,
   dnLoopLineStart,
@@ -56,36 +47,19 @@ const {
   upLoopLineStart,
   upLoopLineEnd,
   yardLine,
-  xtline,
-  xtLineStart,
-  xtLineEnd,
   yardLineStart,
-  yardLineEnd,
-  cxtline,
-  cxtLineEnd,
-  cxtLineStart,
-  axtline,
-  axtLineStart,
-  axtLineEnd,
-  twoxtline,
-  twoxtLineEnd,
-  twoxtLineStart,
-
+  yardLineEnd
 } = TRACK_LAYOUT_CONSTANTS;
 
 
 
 const MainTrackLayout = () => {
-
-  const svgRef = useRef(null);
   
   const {
     upMainLineY,
     dnMainLineY,
     upLoopLineY,
-    dnLoopLineY,
-    signalOffsetY,
-    designWidth,
+    dnLoopLineY
   } = TRACK_LAYOUT_CONSTANTS;
 
   const { trackStates } = useContext(TrackContext);

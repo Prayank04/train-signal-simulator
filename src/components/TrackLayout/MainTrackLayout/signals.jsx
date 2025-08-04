@@ -1,4 +1,3 @@
-import React, { useContext, useState } from 'react';
 import { TRACK_LAYOUT_CONSTANTS } from '../../../utils/constants';
 import { useSignalContext } from '../../../context/SignalContext'; // Make sure this import exists
 
@@ -16,7 +15,7 @@ const {
 
 function InitialColors(lineY, color) {
   // Use the constants from TRACK_LAYOUT_CONSTANTS
-  const { upMainLineY, upLoopLineY, dnMainLineY, dnLoopLineY } = TRACK_LAYOUT_CONSTANTS;
+  const { upMainLineY, upLoopLineY} = TRACK_LAYOUT_CONSTANTS;
     
   const isUpLine = lineY === upMainLineY || lineY === upLoopLineY;
 
@@ -254,7 +253,6 @@ function UpLoopLineSignal({ startX, label = "S39/SH139", lineY = upLoopLineY, in
   const signalY = lineY + 12;
   const y = signalY;
 
-  const circleClusterStartX = startX;
   const xAfterCluster = startX + (fillColors.length - 1) * spacing + circleRadius;
 
   // Horizontal line to quadrant
@@ -869,7 +867,6 @@ function S2Signal({ startX, label, lineY = dnMainLineY, initialColor = 'R', sign
 
     // Single circle after T-shape
     const singleCircleX = startX + 10; // Closer to T-shape
-    {/* Circle with "A" inside */}
 
     // Horizontal line connecting single circle to 4 circles
     const lineStartX = singleCircleX + circleRadius;
@@ -1488,7 +1485,7 @@ function S1C1Signal({ startX, label, lineY = upMainLineY, initialColor = 'R', si
       ))}
 
       {/* Signal name */}
-      <text x={x + 15} y={y - 7} fill="#00bfff" fontSize="8">{signalName}</text>
+      <text x={x + 15} y={y - 9} fill="#00bfff" fontSize="8">{signalName}</text>
     </g>
   );
 }
@@ -1533,7 +1530,7 @@ function UPSignal({ signalName, x, y, initialColor = 'G' }) {
 
 
       {/* Signal name */}
-      <text x={x} y={y + 20} fill="#00bfff" fontSize="8">{signalName}</text>
+      <text x={x} y={y + 14} fill="#00bfff" fontSize="8">{signalName}</text>
     </g>
   );
 }

@@ -1,7 +1,6 @@
 import React, {useContext} from 'react';
 import { TRACK_LAYOUT_CONSTANTS, LEFT_BOTTOM_LINE1_SECTIONS, LEFT_BOTTOM_LINE2_SECTIONS, LEFT_BOTTOM_LINE3_SECTIONS, LEFT_BOTTOM_LINE4_SECTIONS, RIGHT_BOTTOM_LINE1_SECTIONS, RIGHT_BOTTOM_LINE2_SECTIONS, RIGHT_BOTTOM_LINE3_SECTIONS, RIGHT_BOTTOM_LINE4_SECTIONS} from '../../utils/constants';
 import { TrackContext, statusColors } from '../../context/TrackContext';
-import { trackStatusToColor } from '../../utils/constants';
 import VerticalSections from './MainTrackLayout/VerticalSections';
 import TrackSection from './MainTrackLayout/TrackSection';
 import { DNSignal, UPSignal } from './MainTrackLayout/signals';
@@ -59,7 +58,6 @@ const Rightline4UPSignals = [
     bottom_line2_Y,
     bottom_line3_Y,
     bottom_line4_Y,
-    designWidth,
   } = TRACK_LAYOUT_CONSTANTS;
 
 
@@ -75,42 +73,228 @@ const { trackStates } = useContext(TrackContext);
   
   return (
     <div className="bottom-track-layout" style={{ marginTop: '-100px'}}>
-      <svg width="1380" height="250" style={{ backgroundColor: "#333333" }}>
+      <svg width="1380" height="300" 
+      viewBox="0 -20 1380 300"
+      style={{ backgroundColor: "#333333", overflow: 'visible' }}>
         
 
         {/* DN and UP direction labels */}
         <text x= {leftbot_lineStart + 5} y={bottom_line1_Y - 15} fill="yellow" fontSize="10">DN</text>
-        <text x={leftbot_lineStart } y={bottom_line4_Y + 15} fill="yellow" fontSize="10">UP</text>
+        <text x={leftbot_lineStart + 5} y={bottom_line4_Y + 15} fill="yellow" fontSize="10">UP</text>
 
         <text x= {rightbot_lineEnd - 15} y={bottom_line1_Y - 15} fill="yellow" fontSize="10">DN</text>
         <text x={rightbot_lineEnd - 15} y={bottom_line4_Y + 15} fill="yellow" fontSize="10">UP</text>
 
 
-        {/* dashed guide‐line + centered label */}
-        <g>
+        {/* dashed guide‐line: left top track */}
           {/* the dashed line */}
           <line
             x1={leftbot_lineStart}
-            y1={bottom_line1_Y - 25}
+            y1={bottom_line1_Y - 50}
             x2={leftbot_lineEnd}
+            y2={bottom_line1_Y - 50}
+            stroke="white"
+            strokeDasharray="5,5"
+            strokeWidth={1}
+          />
+
+          <line
+            x1={leftbot_lineStart}
+            y1={bottom_line1_Y - 50}
+            x2={leftbot_lineStart}
+            y2={bottom_line1_Y - 10}
+            stroke="white"
+            strokeDasharray="5,5"
+            strokeWidth={1}
+          />
+
+          <line
+            x1={LEFT_BOTTOM_LINE1_SECTIONS[6].x - 5}
+            y1={bottom_line1_Y - 50}
+            x2={LEFT_BOTTOM_LINE1_SECTIONS[6].x - 5}
+            y2={bottom_line1_Y - 10}
+            stroke="white"
+            strokeDasharray="5,5"
+            strokeWidth={1}
+          />
+
+          <line
+            x1={LEFT_BOTTOM_LINE1_SECTIONS[12].x - 5}
+            y1={bottom_line1_Y - 50}
+            x2={LEFT_BOTTOM_LINE1_SECTIONS[12].x - 5}
+            y2={bottom_line1_Y - 10}
+            stroke="white"
+            strokeDasharray="5,5"
+            strokeWidth={1}
+          />  
+
+          <line
+            x1={LEFT_BOTTOM_LINE1_SECTIONS[18].x - 5}
+            y1={bottom_line1_Y - 50}
+            x2={LEFT_BOTTOM_LINE1_SECTIONS[18].x - 5}
+            y2={bottom_line1_Y - 10}
+            stroke="white"
+            strokeDasharray="5,5"
+            strokeWidth={1}
+          />
+
+           <text
+            x={(leftbot_lineStart + (LEFT_BOTTOM_LINE1_SECTIONS[6].x -5)) / 2}
+            y={bottom_line1_Y - 58}            // nudge the text a bit above the dashes
+            fill="#00bfff"
+            fontSize="10"
+            textAnchor="middle"
+            dominantBaseline="middle"
+          >
+            ALH-062
+          </text>
+
+          <text
+            x={( (LEFT_BOTTOM_LINE1_SECTIONS[6].x -5) + (LEFT_BOTTOM_LINE1_SECTIONS[12].x -5)) / 2}
+            y={bottom_line1_Y - 58}            // nudge the text a bit above the dashes
+            fill="#00bfff"
+            fontSize="10"
+            textAnchor="middle"
+            dominantBaseline="middle"
+          >
+            ALH-061
+          </text>
+
+          <text
+            x={( (LEFT_BOTTOM_LINE1_SECTIONS[12].x -5) + (LEFT_BOTTOM_LINE1_SECTIONS[18].x -5)) / 2}
+            y={bottom_line1_Y - 58}            // nudge the text a bit above the dashes
+            fill="#00bfff"
+            fontSize="10"
+            textAnchor="middle"
+            dominantBaseline="middle"
+          >
+            ALH-060
+          </text>
+
+          <text
+            x={( (LEFT_BOTTOM_LINE1_SECTIONS[18].x -5) + leftbot_lineEnd) / 2}
+            y={bottom_line1_Y - 58}            // nudge the text a bit above the dashes
+            fill="#00bfff"
+            fontSize="10"
+            textAnchor="middle"
+            dominantBaseline="middle"
+          >
+            ALH-059
+          </text>
+
+
+        {/* dashed guide‐line: left bottom track */}
+
+          <line
+            x1={leftbot_lineStart}
+            y1={bottom_line4_Y + 50}
+            x2={leftbot_lineEnd}
+            y2={bottom_line4_Y + 50}
+            stroke="white"
+            strokeDasharray="5,5"
+            strokeWidth={1}
+          />
+
+          <line
+            x1={leftbot_lineStart}
+            y1={bottom_line4_Y + 50}
+            x2={leftbot_lineStart}
+            y2={bottom_line4_Y + 10}
+            stroke="white"
+            strokeDasharray="5,5"
+            strokeWidth={1}
+          />
+
+          <line
+            x1={LEFT_BOTTOM_LINE4_SECTIONS[5].x + 10}
+            y1={bottom_line4_Y + 50}
+            x2={LEFT_BOTTOM_LINE4_SECTIONS[5].x + 10}
+            y2={bottom_line4_Y + 10}
+            stroke="white"
+            strokeDasharray="5,5"
+            strokeWidth={1}
+          /> 
+          
+          <line
+            x1={LEFT_BOTTOM_LINE4_SECTIONS[11].x + 10}
+            y1={bottom_line4_Y + 50}
+            x2={LEFT_BOTTOM_LINE4_SECTIONS[11].x + 10}
+            y2={bottom_line4_Y + 10}
+            stroke="white"
+            strokeDasharray="5,5"
+            strokeWidth={1}
+          />
+
+           <line
+            x1={LEFT_BOTTOM_LINE4_SECTIONS[17].x + 5}
+            y1={bottom_line4_Y + 50}
+            x2={LEFT_BOTTOM_LINE4_SECTIONS[17].x + 5}
+            y2={bottom_line4_Y + 10}
+            stroke="white"
+            strokeDasharray="5,5"
+            strokeWidth={1}
+          />
+
+          {/* right top track */}
+
+           <line
+            x1={rightbot_lineStart}
+            y1={bottom_line4_Y + 50}
+            x2={rightbot_lineEnd}
+            y2={bottom_line4_Y + 50}
+            stroke="white"
+            strokeDasharray="5,5"
+            strokeWidth={1}
+          />
+
+          <line
+            x1={rightbot_lineStart}
+            y1={bottom_line1_Y - 50}
+            x2={rightbot_lineEnd}
+            y2={bottom_line1_Y - 50}
+            stroke="white"
+            strokeDasharray="5,5"
+            strokeWidth={1}
+          />
+
+          <line
+            x1={rightbot_lineEnd}
+            y1={bottom_line1_Y - 50}
+            x2={rightbot_lineEnd}
             y2={bottom_line1_Y - 25}
             stroke="white"
             strokeDasharray="5,5"
             strokeWidth={1}
           />
 
-          {/* the text label, centered above the line */}
-          <text
-            x={(leftbot_lineStart + leftbot_lineEnd) / 2}
-            y={bottom_line1_Y - 8}            // nudge the text a bit above the dashes
-            fill="white"
+          <line
+            x1={rightbot_lineEnd}
+            y1={bottom_line4_Y + 50}
+            x2={rightbot_lineEnd}
+            y2={bottom_line4_Y + 25}
+            stroke="white"
+            strokeDasharray="5,5"
+            strokeWidth={1}
+          />
+
+           <text
+            x={(rightbot_lineStart + rightbot_lineEnd) / 2}
+            y={bottom_line1_Y - 58}            // nudge the text a bit above the dashes
+            fill="#00bfff"
             fontSize="10"
             textAnchor="middle"
             dominantBaseline="middle"
           >
             ALH-058
           </text>
-        </g>
+
+
+
+
+    
+
+          {/* the text label, centered above the line */}
+         
 
         {/* ← left‐side bracket with “A” label */}
         <g stroke="white" strokeWidth={2}>

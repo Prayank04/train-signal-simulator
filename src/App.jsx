@@ -8,7 +8,6 @@ import RightControlPanel from './components/ControlPanels/RightControlPanel';
 import CommonControlPanel from './components/ControlPanels/CommonControlPanel';
 import MainTrackLayout from './components/TrackLayout/MainTrackLayout/MainTrackLayout';
 import BottomTrackLayout from './components/TrackLayout/BottomTrackLayout';
-import RightBottomTrackLayout from './components/TrackLayout/RightBottomTrackLayout';
 import './App.css';
 import './styles/globals.css';
 import { RouteProvider } from './context/RouteContext';
