@@ -506,7 +506,7 @@ const MainTrackLayout = () => {
         />
         
         {/* 11. S44/SH144 - Mirror of S39/SH139 */}
-        <DnLoopLineSignal startX={DN_LOOP_LINE_SECTIONS[2].x + (0.15) * (TRACK_LAYOUT_CONSTANTS.dnLoopLineEnd- DN_LOOP_LINE_SECTIONS[2].x)} label="S44,SH144" lineY={dnLoopLineY} initialColor="R" signalName="S44" />
+        <DnLoopLineSignal startX={DN_LOOP_LINE_SECTIONS[2].x + (0.01) * (TRACK_LAYOUT_CONSTANTS.dnLoopLineEnd- DN_LOOP_LINE_SECTIONS[2].x)} label="S44,SH144" lineY={dnLoopLineY} initialColor="R" signalName="S44" />
         
         
         
