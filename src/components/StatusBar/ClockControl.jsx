@@ -43,31 +43,45 @@ export default function ClockControl() {
 
   // This effect is the core log processor for the simulation.
   useEffect(() => {
-    if (!running || !currentTime) return;
+  if (!running || !currentTime) return;
 
-    console.log(
-      `🔍 [ClockControl] checking logs: currentTime=${currentTime.toLocaleTimeString('en-GB')}, sentIndex=${sentIndex}, totalEntries=${allLogEntries.length}`
-    );
+  const timeStr = `${currentTime.toLocaleTimeString('en-GB', { hour12: false, fractionalSecondDigits: 3 })}`;
+  console.log(`🔍 [ClockControl] checking logs: currentTime=${timeStr}, sentIndex=${sentIndex}, totalEntries=${allLogEntries.length}`);
 
-    let idx = sentIndex;
-    while (idx < allLogEntries.length && allLogEntries[idx].time <= currentTime) {
-      const logEntry = allLogEntries[idx];
-      console.log(`✅ [ClockControl] Processing entry ${idx}:`, logEntry.raw);
-      
-      // Send the raw log line to each context for processing.
-      parseRouteLine(logEntry.raw);
-      processLogLine(logEntry.raw);
-      processTrackLine(logEntry.raw);
-      processPointLine(logEntry.raw); // Send to PointContext
-      
-      idx++;
-    }
+  // ✅ Handle jumping backwards
+  if (sentIndex > 0 && allLogEntries[sentIndex - 1]?.time > currentTime) {
+    console.log('⏪ Jumped backwards — resetting sentIndex and reprocessing logs');
+    setSentIndex(0);
+  }
 
-    if (idx !== sentIndex) {
-      console.log(`➡️ [ClockControl] advancing sentIndex to ${idx}`);
-      setSentIndex(idx);
-    }
-  }, [currentTime, running, allLogEntries, sentIndex, setSentIndex, processLogLine, processTrackLine, parseRouteLine, processPointLine]);
+  let idx = sentIndex;
+  while (idx < allLogEntries.length && allLogEntries[idx].time <= currentTime) {
+    const logEntry = allLogEntries[idx];
+    console.log(`✅ [ClockControl] Processing entry ${idx}:`, logEntry.raw);
+
+    parseRouteLine(logEntry.raw);
+    processLogLine(logEntry.raw);
+    processTrackLine(logEntry.raw);
+    processPointLine(logEntry.raw);
+
+    idx++;
+  }
+
+  if (idx !== sentIndex) {
+    console.log(`➡️ [ClockControl] advancing sentIndex to ${idx}`);
+    setSentIndex(idx);
+  }
+}, [
+  currentTime,
+  running,
+  allLogEntries,
+  sentIndex,
+  setSentIndex,
+  processLogLine,
+  processTrackLine,
+  parseRouteLine,
+  processPointLine
+]);
 
   return (
     <div className="flex items-center space-x-4">

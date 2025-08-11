@@ -1,15 +1,10 @@
 import { useState, useEffect } from 'react';
 
-export default function useTimer() {
+export default function useTimer(precision = 16) {
   const [time, setTime] = useState(new Date());
-
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setTime(new Date()); // just update from local machine
-    }, 1000);
-
-    return () => clearInterval(intervalId); // cleanup on unmount
-  }, []);
-
+    const id = setInterval(() => setTime(new Date()), precision);
+    return () => clearInterval(id);
+  }, [precision]);
   return time;
 }

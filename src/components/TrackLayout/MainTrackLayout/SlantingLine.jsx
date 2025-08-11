@@ -64,7 +64,7 @@ const SlantingLine = ({
   dnSectionRatio = 0,
   UpTrainMovement,
   DnTrainMovement,
-  strokeWidth = 2,
+  strokeWidth = 3,
   showPerpendicular = true,
   perpendicularLength = 10
 }) => {
@@ -131,6 +131,7 @@ const SlantingLine = ({
     x1_main = Upx; y1_main = Upy + 7; x2_main = Dnx; y2_main = Dny - 7;
   }
 
+  
   // --- Calculations for decorative elements ---
   const m = (y2_main - y1_main) / (x2_main - x1_main);
   const midX = (x1_main + x2_main) / 2;
@@ -172,7 +173,27 @@ const SlantingLine = ({
   const offsetX = offset * Math.sin(angle);
   const offsetY = offset * Math.cos(angle);
 
+  // --- Main slanted line coordinates ---
+  if (pointState === 'Reverse') {
+    // extend slanted line by 6px at both ends
+    const extend = 1;
+    const dx = extend * Math.cos(Math.atan2(Dny - Upy, Dnx - Upx));
+    const dy = extend * Math.sin(Math.atan2(Dny - Upy, Dnx - Upx));
+
+    x1_main = Upx - dx;
+    y1_main = Upy - dy;
+    x2_main = Dnx + dx;
+    y2_main = Dny + dy;
+  } else {
+    x1_main = Upx;
+    y1_main = Upy + 7;
+    x2_main = Dnx;
+    y2_main = Dny - 7;
+  }
+
   
+
+
 
   return (
     <g>
@@ -189,7 +210,15 @@ const SlantingLine = ({
             x2={UpTrainMovement === "left" ? Upx + 10 : Upx - 10}
             y2={Upy}
             stroke="#333333"
-            strokeWidth={3}
+            strokeWidth={4}
+          />
+          <line
+            x1={Dnx}
+            y1={Dny}
+            x2={DnTrainMovement === "right" ? Dnx - 10 : Dnx + 10}
+            y2={Dny}
+            stroke="#333333"
+            strokeWidth={4}
           />
           <line
             x1={UpTrainMovement === "left" ? Upx + 10 : Upx - 10}
@@ -201,14 +230,6 @@ const SlantingLine = ({
             }
             y2={Upy}
             stroke="white"
-            strokeWidth={3}
-          />
-          <line
-            x1={Dnx}
-            y1={Dny}
-            x2={DnTrainMovement === "right" ? Dnx - 10 : Dnx + 10}
-            y2={Dny}
-            stroke="#333333"
             strokeWidth={3}
           />
           <line

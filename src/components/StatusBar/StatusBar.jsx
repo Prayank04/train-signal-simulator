@@ -2,6 +2,7 @@ import useTimer from '../../hooks/useTimer'; // adjust path if needed
 import React, { useContext, useState } from 'react';
 import { TimeContext } from '../../context/TimeContext';
 import ClockControl from './ClockControl';
+import DigitalClock from './DigitalClock';
 import './StatusBar.css';
 import { parseLogFile } from '../../utils/logParser';
 import { parseAndStructureData } from '../../utils/excelParser';
@@ -154,7 +155,8 @@ export default function StatusBar() {
       hour12: false,
       hour: '2-digit',
       minute: '2-digit',
-      second: '2-digit'
+      second: '2-digit',
+      fractionalSecondDigits: 3
     });
     return `${day}/${month}/${year} ${time}`;
   };
@@ -180,9 +182,9 @@ export default function StatusBar() {
       </div>
       {/* Center: Time and Clock Control */}
       <div className="status-right flex items-center space-x-4">
-        <div className="time-display">
-          {formatTime(displayTime)}
-        </div>
+          <div className="time-display">
+            <DigitalClock time={displayTime} />
+          </div>
         <ClockControl />
       </div>
         

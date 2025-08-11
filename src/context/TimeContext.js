@@ -1,5 +1,5 @@
 // src/context/TimeContext.jsx
-import React, { createContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useState, useEffect, useCallback, useRef } from 'react';
 
 export const TimeContext = createContext();
 
@@ -13,6 +13,13 @@ export function TimeProvider({ children }) {
   // This will now hold the structured Map (our "database") from excelParser.js
   const [routeDatabase, setRouteDatabase] = useState(null);
 
+  // --- Refs for stable timing ---
+  const lastRealMsRef = useRef(null);
+  const sentIndexRef = useRef(sentIndex);
+  const allLogEntriesRef = useRef(allLogEntries);
+  useEffect(() => { sentIndexRef.current = sentIndex; }, [sentIndex]);
+  useEffect(() => { allLogEntriesRef.current = allLogEntries; }, [allLogEntries]);
+
   // If initialTime changes (i.e. file upload), reset currentTime & sentIndex
   useEffect(() => {
     if (initialTime) {
@@ -21,26 +28,39 @@ export function TimeProvider({ children }) {
     }
   }, [initialTime]);
 
-  // ticker: This effect is now only responsible for advancing the clock.
-  useEffect(() => {
-    if (!running || !currentTime) return;
+  // Millisecond-accurate ticker using delta time
+   useEffect(() => {
+     if (!running || !currentTime) return;
+     const TICK_MS = 16; // ~60Hz; 10–20ms is a good range
+     lastRealMsRef.current = performance.now();
 
-    const id = setInterval(() => {
-      if (allLogEntries.length > 0 && sentIndex >= allLogEntries.length) {
-          console.log("⏹️ [TimeContext] End of logs reached. Pausing timer.");
-          setRunning(false);
-          return;
-      }
+     const id = setInterval(() => {
+       // Auto-pause once all logs are processed
+       if (
+         allLogEntriesRef.current.length > 0 &&
+         sentIndexRef.current >= allLogEntriesRef.current.length
+       ) {
+         console.log("⏹️ [TimeContext] End of logs reached. Pausing timer.");
+         setRunning(false);
+         return;
+       }
 
-      setCurrentTime(prev => {
-        const next = new Date(prev.getTime() + 1000);
-        console.log('⏱ [TimeContext] Ticking to', next.toLocaleTimeString('en-GB'));
-        return next;
-      });
-    }, 1000);
+       const now = performance.now();
+       const deltaMs = now - lastRealMsRef.current;
+       lastRealMsRef.current = now;
 
-    return () => clearInterval(id);
-  }, [running, currentTime, allLogEntries, sentIndex]);
+       setCurrentTime(prev => {
+         const next = new Date(prev.getTime() + deltaMs);
+         console.log(
+           '⏱ [TimeContext] Ticking to',
+           next.toLocaleTimeString('en-GB', { hour12: false, fractionalSecondDigits: 3 })
+         );
+         return next;
+       });
+     }, TICK_MS);
+
+     return () => clearInterval(id);
+   }, [running, !!currentTime]); // don't depend on the Date object itself
 
 
   // actions exposed to consumers
