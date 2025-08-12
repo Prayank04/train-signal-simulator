@@ -66,7 +66,9 @@ const SlantingLine = ({
   DnTrainMovement,
   strokeWidth = 3,
   showPerpendicular = true,
-  perpendicularLength = 10
+  perpendicularLength = 10,
+  upTrack,
+  dnTrack,
 }) => {
   const { pointStates } = usePointContext();
   const { trackStates } = useContext(TrackContext);
@@ -115,10 +117,14 @@ const SlantingLine = ({
   }
 
   // --- Determine line color from TrackContext ---
-  const statusUp = trackStates[`${UpName}XT`];
-  const statusDn = trackStates[`${DnName}XT`];
-  const lineCode = statusUp === statusDn ? statusUp : "CLEAR";
-  const strokeColor = statusColors[lineCode] || "white";
+  // ...existing code...
+const statusUp = trackStates[`${UpName}XT`];
+const statusDn = trackStates[`${DnName}XT`];
+const lineCode = statusUp === statusDn ? statusUp : "CLEAR";
+const strokeColor = statusColors[lineCode] || "white";
+const upStrokeColor = statusColors[statusUp] || "white";
+const dnStrokeColor = statusColors[statusDn] || "white";
+// ...existing code...
 
   // --- Determine line position from PointContext ---
   const pointState = pointStates[pointId] || 'Normal';
@@ -244,11 +250,27 @@ const SlantingLine = ({
             stroke="white"
             strokeWidth={3}
           />
+          <line
+            x1 = {x1_main}
+            y1 = {y1_main}
+            x2 = {(x1_main + x2_main) / 2}
+            y2 = {(y1_main + y2_main) / 2}
+            strokeWidth = {3}
+            stroke={upStrokeColor}
+          />
+          <line
+            x1 = {x2_main}
+            y1 = {y2_main}
+            x2 = {(x1_main + x2_main) / 2}
+            y2 = {(y1_main + y2_main) / 2}
+            strokeWidth={3}
+            stroke={dnStrokeColor}
+          />
         </>
       )}
 
       {showPerpendicular && isFinite(perpX1) && (
-        <line x1={perpX1} y1={perpY1} x2={perpX2} y2={perpY2} stroke={strokeColor} strokeWidth={strokeWidth / 2} />
+        <line x1={perpX1} y1={perpY1} x2={perpX2} y2={perpY2} stroke='white' strokeWidth={strokeWidth / 2} />
       )}
       
       <circle cx={Ucx} cy={Ucy} r={3} fill="#333333" stroke="white" strokeWidth={0.5} />
@@ -273,12 +295,12 @@ const SlantingLine = ({
       >
         {DnName}
       </text>
-      <line x1={Uuslx} y1={Uusly} x2={Udslx} y2={Udsly} stroke={strokeColor} strokeWidth={0.5} />
-      <line x1={Uuslx - 3} y1={Uusly} x2={Udslx - 3} y2={Udsly} stroke={strokeColor} strokeWidth={0.5} />
-      <line x1={Uuslx + 3} y1={Uusly} x2={Udslx + 3} y2={Udsly} stroke={strokeColor} strokeWidth={0.5} />
-      <line x1={Duslx} y1={Dusly} x2={Ddslx} y2={Ddsly} stroke={strokeColor} strokeWidth={0.5} />
-      <line x1={Duslx - 3} y1={Dusly} x2={Ddslx - 3} y2={Ddsly} stroke={strokeColor} strokeWidth={0.5} />
-      <line x1={Duslx + 3} y1={Dusly} x2={Ddslx + 3} y2={Ddsly} stroke={strokeColor} strokeWidth={0.5} />
+      <line x1={Uuslx} y1={Uusly} x2={Udslx} y2={Udsly} stroke='white' strokeWidth={0.5} />
+      <line x1={Uuslx - 3} y1={Uusly} x2={Udslx - 3} y2={Udsly} stroke='white' strokeWidth={0.5} />
+      <line x1={Uuslx + 3} y1={Uusly} x2={Udslx + 3} y2={Udsly} stroke='white' strokeWidth={0.5} />
+      <line x1={Duslx} y1={Dusly} x2={Ddslx} y2={Ddsly} stroke='white' strokeWidth={0.5} />
+      <line x1={Duslx - 3} y1={Dusly} x2={Ddslx - 3} y2={Ddsly} stroke='white' strokeWidth={0.5} />
+      <line x1={Duslx + 3} y1={Dusly} x2={Ddslx + 3} y2={Ddsly} stroke='white' strokeWidth={0.5} />
       {yardCap && (
         <line x1={capX1} y1={capY1} x2={capX2} y2={capY2} stroke={strokeColor} strokeWidth={strokeWidth} />
       )}

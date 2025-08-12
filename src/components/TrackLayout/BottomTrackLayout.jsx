@@ -72,10 +72,18 @@ const { trackStates } = useContext(TrackContext);
 
   
   return (
-    <div className="bottom-track-layout" style={{ marginTop: '-100px'}}>
-      <svg width="1380" height="300" 
-      viewBox="0 -20 1380 300"
-      style={{ backgroundColor: "#333333", overflow: 'visible' }}>
+    <div className="bottom-track-layout" style={{ marginTop: '-125px'}}>
+      <svg
+        viewBox="0 -20 1380 300"
+        preserveAspectRatio="xMinYMin meet"
+        style={{
+          width: "100%",      // fills horizontal space
+          height: "auto",     // scales height proportionally
+          display: "block",
+          backgroundColor: "#333333",
+          overflow: "visible"
+        }}
+      >
         
 
         {/* DN and UP direction labels */}

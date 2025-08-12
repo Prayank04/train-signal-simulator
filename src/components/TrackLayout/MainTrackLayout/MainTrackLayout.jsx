@@ -72,11 +72,14 @@ const MainTrackLayout = () => {
   return (
     <div className="main-track-layout">
       <svg
-        width="1400"
-        height="400"
         viewBox="0 0 1400 400"
         preserveAspectRatio="xMinYMin meet"
-        style={{ backgroundColor: '#333333' }}
+        style={{
+          width: "100%",           // Fill container horizontally
+          height: "auto",          // Maintain aspect ratio
+          display: "block",
+          backgroundColor: "#333333"
+        }}
       >
         
         {/* UP MAIN LINE */}
@@ -1170,6 +1173,8 @@ const MainTrackLayout = () => {
           dnSectionArr={UP_LOOP_LINE_SECTIONS}
           dnSectionIdx={upLoopLineStart}
           dnSectionRatio={0.6}
+          upTrack='249BXT'
+          dnTrack='249AXT'
         />
 
         <SlantingLine
@@ -1184,6 +1189,8 @@ const MainTrackLayout = () => {
           dnSectionArr={UP_LOOP_LINE_SECTIONS}
           dnSectionIdx={2}
           dnSectionRatio={4/11}
+          upTrack='203BXT'
+          dnTrack='203AXT'
         />
 
         <SlantingLine 
@@ -1198,6 +1205,8 @@ const MainTrackLayout = () => {
           dnSectionArr={UP_MAIN_LINE_SECTIONS}
           dnSectionIdx={1}
           dnSectionRatio={4/10}
+          upTrack='298BXT'
+          dnTrack='298AXT'
         />
 
         <SlantingLine 
@@ -1212,6 +1221,8 @@ const MainTrackLayout = () => {
           dnSectionArr={UP_MAIN_LINE_SECTIONS}
           dnSectionIdx={6}
           dnSectionRatio={1.5/10}
+          upTrack='202AXT'
+          dnTrack='202BXT'
         />
 
         <SlantingLine 
@@ -1226,6 +1237,8 @@ const MainTrackLayout = () => {
           dnSectionArr={DN_MAIN_LINE_SECTIONS}
           dnSectionIdx={2}
           dnSectionRatio={4.5/10}
+          upTrack='296AXT'
+          dnTrack='296BXT'
         />
 
         <SlantingLine 
@@ -1240,6 +1253,8 @@ const MainTrackLayout = () => {
           dnSectionArr={DN_MAIN_LINE_SECTIONS}
           dnSectionIdx={4}
           dnSectionRatio={6.5/10}
+          upTrack='242AXT'
+          dnTrack='242BXT'
         />
 
         <SlantingLineWOper

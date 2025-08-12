@@ -8,7 +8,7 @@ const SlantingLineWOper = ({
   Dnx,
   Upy,
   Dny,
-  strokeWidth = 2,
+  strokeWidth = 3,
   showPerpendicular = true,
   perpendicularLength = 10
 }) => {
