@@ -86,7 +86,7 @@ export function TrackProvider({ children }) {
         }
       }
     }
-  }, [activeRoutes]);
+  }, [activeRoutes, setMultipleTrackStates]);
 
   const parseRouteLine = useCallback((logLine) => {
     if (!routeDatabase || !logLine.includes('Type:Route Set')) return;

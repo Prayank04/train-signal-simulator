@@ -28,39 +28,41 @@ export function TimeProvider({ children }) {
     }
   }, [initialTime]);
 
-  // Millisecond-accurate ticker using delta time
-   useEffect(() => {
-     if (!running || !currentTime) return;
-     const TICK_MS = 16; // ~60Hz; 10–20ms is a good range
-     lastRealMsRef.current = performance.now();
 
-     const id = setInterval(() => {
-       // Auto-pause once all logs are processed
-       if (
-         allLogEntriesRef.current.length > 0 &&
-         sentIndexRef.current >= allLogEntriesRef.current.length
-       ) {
-         console.log("⏹️ [TimeContext] End of logs reached. Pausing timer.");
-         setRunning(false);
-         return;
-       }
+  useEffect(() => {
+  if (!running || !currentTime) return;  // keep this early return
 
-       const now = performance.now();
-       const deltaMs = now - lastRealMsRef.current;
-       lastRealMsRef.current = now;
+  const TICK_MS = 16; // ~60Hz; 10–20ms is a good range
+  lastRealMsRef.current = performance.now();
 
-       setCurrentTime(prev => {
-         const next = new Date(prev.getTime() + deltaMs);
-         console.log(
-           '⏱ [TimeContext] Ticking to',
-           next.toLocaleTimeString('en-GB', { hour12: false, fractionalSecondDigits: 3 })
-         );
-         return next;
-       });
-     }, TICK_MS);
+  const id = setInterval(() => {
+    // Auto-pause once all logs are processed
+    if (
+      allLogEntriesRef.current.length > 0 &&
+      sentIndexRef.current >= allLogEntriesRef.current.length
+    ) {
+      console.log("⏹️ [TimeContext] End of logs reached. Pausing timer.");
+      setRunning(false);
+      return;
+    }
 
-     return () => clearInterval(id);
-   }, [running, !!currentTime]); // don't depend on the Date object itself
+    const now = performance.now();
+    const deltaMs = now - lastRealMsRef.current;
+    lastRealMsRef.current = now;
+
+    setCurrentTime(prev => {
+      const next = new Date(prev.getTime() + deltaMs);
+      console.log(
+        '⏱ [TimeContext] Ticking to',
+        next.toLocaleTimeString('en-GB', { hour12: false, fractionalSecondDigits: 3 })
+      );
+      return next;
+    });
+  }, TICK_MS);
+
+  return () => clearInterval(id);
+}, [running, currentTime]); // <-- direct reference, no !!
+
 
 
   // actions exposed to consumers
