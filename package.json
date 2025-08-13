@@ -1,6 +1,7 @@
 {
   "name": "railway-control-hmi",
   "version": "1.0.0",
+  "author": "Ryan Mathur",
   "description": "Railway Control HMI System",
   "private": true,
 
@@ -30,7 +31,8 @@
     },
     "directories": {
       "buildResources": "assets"
-    }
+    },
+    "npmRebuild": false
   },
 
   "dependencies": {
