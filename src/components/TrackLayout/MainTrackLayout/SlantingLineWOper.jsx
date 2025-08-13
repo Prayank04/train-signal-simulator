@@ -38,11 +38,6 @@ const SlantingLineWOper = ({
   const Udslx = x1 + 2; // Up down small line x
   const Udsly = y1 - 11; // Up down small line y
 
-  const Duslx = Dcx; // Down up small line x
-  const Dusly = Dcy - 5; // Down up small line y
-  const Ddslx = x2 - 2; // Down down small line x
-  const Ddsly = y2 + 11; // Down down small line y
-
   return (
     <g>
       {/* Main slanting line */}
