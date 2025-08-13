@@ -1,29 +1,35 @@
-name: Build Windows EXE
+name: Build Windows .exe
 
 on:
-  workflow_dispatch:  # Lets you manually trigger the build from GitHub Actions tab
+  workflow_dispatch:
+  push:
+    branches: [ main ]   # change to "master" if that's your default
 
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: '20'
+          cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Build EXE for Windows
-        run: npm run dist:win
+      - name: Build React
+        run: npm run build:web
 
-      - name: Upload EXE as artifact
+      - name: Package Windows (.exe)
+        run: npx electron-builder --win
+
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: railway-control-hmi-windows
-          path: dist/*.exe
+          name: windows-dist
+          path: dist/**
