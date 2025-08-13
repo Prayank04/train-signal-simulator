@@ -1,9 +1,10 @@
+# .github/workflows/build-windows.yml
 name: Build Windows .exe
 
 on:
-  workflow_dispatch:
   push:
-    branches: [ main ]   # change to "master" if that's your default
+    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -13,23 +14,25 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: 20
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Build React
+      # ---- Install GTK / Cairo for node-canvas ----
+      - name: Install GTK (for node-canvas)
+        shell: pwsh
+        run: |
+          $uri = "https://github.com/tschoonj/GTK-for-Windows-Runtime-Environment-Installer/releases/download/2021-03-15/gtk3-runtime-3.24.29-2021-03-15-ts-win64.exe"
+          Invoke-WebRequest $uri -OutFile gtk-installer.exe
+          Start-Process -FilePath .\gtk-installer.exe -ArgumentList '/SILENT','/DIR=C:\GTK' -Wait
+          echo "C:\GTK\bin" | Out-File -FilePath $env:GITHUB_PATH -Append
+
+      - name: Build web
         run: npm run build:web
 
-      - name: Package Windows (.exe)
+      - name: Package Windows (Electron)
         run: npx electron-builder --win
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: windows-dist
-          path: dist/**
