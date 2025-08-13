@@ -9,7 +9,7 @@ function createWindow() {
     webPreferences: { nodeIntegration: false, contextIsolation: true }
   });
 
-  const indexPath = path.join(__dirname, 'build', 'index.html');
+  const indexPath = path.join(__dirname, 'index.html');
   win.loadURL(`file://${indexPath}`);
 
   if (!app.isPackaged) win.webContents.openDevTools();

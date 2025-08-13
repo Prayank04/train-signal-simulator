@@ -25,6 +25,10 @@ jobs:
       - name: Build web
         run: npm run build:web
 
+      - name: Copy electron.js to build
+        shell: bash
+        run: cp electron.js build/electron.js
+
       - name: Package Windows (Electron)
         run: npx electron-builder --win --config.npmRebuild=false --publish=never
 

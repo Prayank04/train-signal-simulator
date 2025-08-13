@@ -5,8 +5,7 @@
   "description": "Railway Control HMI System",
   "private": true,
 
-  "main": "electron.js",
-  "homepage": ".",
+  "main": "build/electron.js",
 
   "scripts": {
     "start": "react-scripts start",
@@ -22,7 +21,6 @@
     "productName": "TrainSignalSim",
     "files": [
       "build/**/*",
-      "electron.js",
       "package.json"
     ],
     "win": {
