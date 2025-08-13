@@ -30,8 +30,7 @@ const SlantingLineWOper = ({
   const m = (y2 - y1) / (x2 - x1);
   const Ucx = Upx + (m > 0 ? 4 : m < 0 ? -4 : 0);
   const Ucy = Upy - 15;
-  const Dcx = Dnx - (m > 0 ? 4 : m < 0 ? -4 : 0);
-  const Dcy = Dny + 15;
+  
 
   const Uuslx = Ucx; // Up up small line x
   const Uusly = Ucy + 5; // Up up small line y
