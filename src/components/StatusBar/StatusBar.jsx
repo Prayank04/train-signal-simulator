@@ -146,20 +146,6 @@ export default function StatusBar() {
     e.target.value = '';
   };
 
-  const formatTime = (date) => {
-    if (!date) return "--/--/---- --:--:--";
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = date.toLocaleDateString('en-GB', { month: 'short' });
-    const year = date.getFullYear();
-    const time = date.toLocaleTimeString('en-GB', {
-      hour12: false,
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      fractionalSecondDigits: 3
-    });
-    return `${day}/${month}/${year} ${time}`;
-  };
 
   // Use simulation time if available, else current system time
   const displayTime = initialTime ? currentTime : liveTime;

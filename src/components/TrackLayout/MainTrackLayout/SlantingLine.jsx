@@ -173,11 +173,6 @@ const dnStrokeColor = statusColors[statusDn] || "white";
   const capX2 = Ucx + 5;
   const capY2 = Ucy - 1;
 
-  // Calculate coordinates for the two extra lines in Reverse state
-  const offset = 2; // The distance between the parallel lines
-  const angle = Math.atan2(y2_main - y1_main, x2_main - x1_main);
-  const offsetX = offset * Math.sin(angle);
-  const offsetY = offset * Math.cos(angle);
 
   // --- Main slanted line coordinates ---
   if (pointState === 'Reverse') {
@@ -206,7 +201,6 @@ const dnStrokeColor = statusColors[statusDn] || "white";
       <line x1={x1_main} y1={y1_main} x2={x2_main} y2={y2_main} stroke={strokeColor} strokeWidth={strokeWidth} />
       
       {/* Conditionally render the two extra lines only when in Reverse state */}
-      // ...existing code...
 
       {pointState === 'Reverse' && (
         <>
