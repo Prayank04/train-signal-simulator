@@ -22,7 +22,7 @@
     "productName": "TrainSignalSim",
     "files": [
       "build/**/*",
-      "electron.js",
+      "public/electron.js",
       "package.json"
     ],
     "win": {
@@ -32,7 +32,8 @@
     "directories": {
       "buildResources": "assets"
     },
-    "npmRebuild": false
+    "npmRebuild": false,
+    "publish": "never"
   },
 
   "dependencies": {
