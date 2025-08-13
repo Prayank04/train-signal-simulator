@@ -26,7 +26,7 @@ jobs:
         run: npm run build:web
 
       - name: Package Windows (Electron)
-        run: npx electron-builder --win --config.npmRebuild=false
+        run: npx electron-builder --win --config.npmRebuild=false --publish=never
 
       - name: Upload EXE
         uses: actions/upload-artifact@v4
