@@ -5,7 +5,7 @@
   "description": "Railway Control HMI System",
   "private": true,
 
-  "main": "electron.js",
+  "main": "public/electron.js",
   "homepage": ".",
 
   "scripts": {
